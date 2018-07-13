@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>试卷作业试卷详情-老师端</title>
+  <link rel="stylesheet" href="http://192.168.10.14/download/fe/yg-ui/styles/yg-ui.css">
+  <link rel="stylesheet" href="../src/assets/analysis.css">
+  <link rel="stylesheet" href="../src/assets/analy-homework.css">
+  <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/v-charts/lib/index.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
+</head>
+<body>
+
+<div class="c-pre-student" id="app">
+  <div class="c-pres-container">
+    <div class="c-pres__content f-clearfix">
+      <div class="c-pres__content--left">
+      <div class="c-pres__content--left-item  text-ovh">
+      金城武
+      </div>
+      <div class="c-pres__content--left-item text-ovh">
+      <span class="c-pres_name-position text-ovh">
+      金城武
+      <div class="c-pres__student--is-check"></div>
+      </span>
+      </div>
+      </div>
+      <div class="analy-student-details">
+        <div class="analy-student-details__item">
+          <i class="analy-student-details__type analy-student-details__type--grade"></i>
+          <p class="analy-student-details__num">
+            <span class="font-color--lightgreen font-size28">80%</span>班级正确率
+          </p>
+          <p class="analy-student-details__progress">
+            <span class="analy-student-details__bar analy-student-details__bar--lightgreen"></span>
+          </p>
+          <p class="analy-student-details__tips">
+            高于班级正确率
+            <span class="font-color--lightgreen">8%</span>
+          </p>
+        </div>
+        <div class="analy-student-details__item">
+          <i class="analy-student-details__type analy-student-details__type--time"></i>
+          <p class="analy-student-details__num">
+            <span class="font-color--green font-size28">3'88''</span>用时
+          </p>
+          <p class="analy-student-details__progress">
+            <span class="analy-student-details__bar analy-student-details__bar--green"></span>
+          </p>
+          <p class="analy-student-details__tips">
+            提交时间
+            <span class="font-color--green">5-3 15:09</span>
+          </p>
+        </div>
+        <div class="analy-student-details__item">
+          <i class="analy-student-details__type analy-student-details__type--rank"></i>
+          <p class="analy-student-details__num">
+            <span class="font-color--orange font-size28">8</span><span class="font-color--orange">/30</span>排名
+          </p>
+          <p class="analy-student-details__progress">
+            <span class="analy-student-details__bar analy-student-details__bar--orange"></span>
+          </p>
+          <p class="analy-student-details__tips">
+            超过班上<span class="font-color--orange">8%</span>的同学
+          </p>
+        </div>
+      </div>
+      <div class="analy-detail-tabs">
+        <ul>
+          <li class="analy-detail-tabs__item">
+            学生详情
+          </li>
+          <li class="analy-detail-tabs__item analy-detail-tabs__item--active">
+            知识点掌握分析
+          </li>
+        </ul>
+      </div>
+      <div class="c-pres__content--center c-pres__content--center--tea">
+        <div class="c-pres__tab-show f-clearfix">
+          <div class="c-pres--isshow-answer">答案解析</div>
+        </div>
+        <div class="c-pres__topic">
+          <!-- 题干部分 -->
+          <div class="c-pres__topic--item">
+            <div class="c-dw__question-title">
+              一.解答题<span class="font-color--blue font-size14">【班级正确率70%】</span>
+            </div>
+            <div class="c-pres__subjective" v-if="13">
+              <div class="c-pres__qstem--left c-pres__qstem--left--tea">
+                <div class="c-pres__topic-title">
+                  <span>1.</span> 阅读下面的文字，回答后面问题。
+                </div>
+                <div class="c-pres__topic-content">
+                  我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天，祖母死了，父亲的差使也交卸了，正是祸不单行的日子，我从北京到徐州，打算跟着父亲奔丧回家。到徐州见着父亲，看见满院狼藉的东西，又想起祖母，不禁簌簌地流下眼泪。父亲说，“事已如此，不必难过，好在天无绝人之路！”
+                  　　回家变卖典质，父亲还了亏空；又借钱办了丧事。这些日子，家中光景很是惨淡，一半为了丧事，一半为了父亲赋闲。丧事完毕，父亲要到南京谋事，我也要回北京念书，我们便同行。钱，托他们直是白托！而且我这样大年纪的人，难道还不能料理自己么？唉，我现在想想，那时真是太聪明了！
+                  　　我说道，“爸爸，你走吧。”他望车外看了看，说，“我买几个橘子去。你就在此地，不要走动。”我看那边月台的栅栏外有几个卖东西的等着顾客。走到那边月台，须穿过铁道，须跳下去又爬上去。父亲是一个胖子，走过去自然要费事些。我本来要去的，他不肯，只好让他去。我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去，尚不大难。可是他穿过铁道，要爬上那边月台，就不容易了。他用两手攀着上面，两脚再向上缩；他肥胖的身子向左微倾，显出努力的样子。
+                </div>
+                <div class="c-pres__topic-title c-res__add-margin">
+                  （1）从全文看，父亲是一个怎样的人？。
+                  <span class="c-res-itsource">(10分)</span>
+                </div>
+                <div class="c-pres__topic-content ">
+                  我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天，祖母死了，父亲的差使也交卸了，正是祸不单行的日子，我从北京到徐州，打算跟着父亲奔丧回家。到徐州见着父亲，
+                  看见满院狼藉的东西，又想起祖母，不禁簌簌地流下眼泪。父亲说，“事已如此，不必难过，好在天无绝人之路
+                </div>
+                <div class="c-res__postil">
+                  <div class="c-res__positl-title">文字标注</div>
+                  <div class="c-res__positl-content">
+                    看见满院狼藉的东西，又想起祖母
+                  </div>
+                </div>
+                <div class="c-res__postil c-res__answer--show c-res__kd">
+                  <div class="c-res__answer-title">【考点】</div>
+                  <div class="c-res__positl-content c-res__answer-content c-pres__text">
+                    我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天到徐州见着父亲， 看见满院狼藉的东西，又想起祖母，不禁簌簌地流下眼泪。父亲说，“事已如此，不必难过，好在天无绝人之路！
+                  </div>
+                </div>
+                <div class="c-res__postil c-res__answer--show">
+                  <div class="c-res__answer-title">【解析】</div>
+                  <div class="c-res__positl-content c-res__answer-content c-pres__explin">
+                    我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天
+                  </div>
+                </div>
+                <div class="analy-paper--charts">
+                  <div class="analy-paper--charts__item">
+                    <p class="analy-paper--charts__tit">
+                      正确率
+                    </p>
+                    <div class="analy-paper--charts__box">
+                      <div class="analy-paper--charts__nums">
+                        <p class="analy-paper--charts__num">
+                          75%
+                        </p>
+                        <p class="analy-paper--charts__tips">
+                          答对20人，占比75%
+                        </p>
+                        <p class="analy-paper--charts__tips">
+                          答错5人，占比25%
+                        </p>
+                        <p class="analy-paper--charts__tips">
+                          半对5人，占比25%
+                        </p>
+                      </div>
+                      <ve-ring :data="chartData1" height="220px" :settings="chartSettings" :tooltip-visible='false'
+                               :legend-visible="false" :colors="pieColor" :events="log"></ve-ring>
+                    </div>
+                  </div>
+                  <div class="analy-paper--charts__item">
+                    <p class="analy-paper--charts__tit">选项分布
+                    </p>
+                    <div class="analy-paper--charts__box">
+                      <ve-histogram :data="chartData3" height="220px" :legend-visible="false" :barwidth="60"
+                                    :settings="chartSettings3" :colors="histogramColor" :events="log" :y-axis="yAxis"
+                                    :x-axis="xAxis"></ve-histogram>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="c-pres__check-operation--right">
+                <div class="c-pres-source__btn c-pres-source__all">24.5</div>
+              </div>
+            </div>
+          </div>
+          <div class="c-pres__topic--item">
+            <div class="c-pres__subjective" v-for="item in 1" v-if="13">
+              <div class="c-pres__qstem--left c-pres__qstem--left--tea">
+                <div class="c-pres__topic-title c-res__add-margin">
+                  （2）从全文看，父亲是一个怎样的人？。
+                  <span class="c-res-itsource">(10分)</span>
+                </div>
+                <div class="c-pres__topic-content ">
+                  我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天，祖母死了，父亲的差使也交卸了，正是祸不单行的日子，我从北京到徐州，打算跟着父亲奔丧回家。到徐州见着父亲，
+                  看见满院狼藉的东西，又想起祖母，不禁簌簌地流下眼泪。父亲说，“事已如此，不必难过，好在天无绝人之路
+                </div>
+                <!-- 答案 -->
+                <div class="c-res__postil c-res__answer--show">
+                  <div class="c-res__answer-title">【答案】</div>
+                  <div class="c-res__positl-content c-res__answer-content">
+                    我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天，祖母死了，父亲的差使也交卸了，正是祸不单行的日子，我从北京到徐州，打算跟着父亲奔丧回家。到徐州见着父亲，
+                    看见满院狼藉的东西，又想起祖母，不禁簌簌地流下眼泪。父亲说，“事已如此，不必难过，好在天无绝人之路！
+                  </div>
+                </div>
+                <!-- 文字标注 -->
+                <div class="c-res__postil">
+                  <div class="c-res__positl-title">文字标注</div>
+                  <div class="c-res__positl-content">
+                    又想起祖母，不禁簌簌地流下眼泪。父亲说
+                  </div>
+                </div>
+              </div>
+              <div class="c-pres__check-operation--right">
+                <div class="c-pres-source__btn">24.5</div>
+                <div class="c-pres-source-ops__item c-res__right c-res__right-is-active "></div>
+                <div class="c-pres-source-ops__item c-res__half-right c-res__half-right-is-active"></div>
+                <div class="c-pres-source-ops__item c-res__wrong c-res__wrong-is-active"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-pres__topic--item">
+            <div class="c-dw__question-title">
+              二.选择题<span class="font-color--blue font-size14">【班级正确率70%】</span>
+            </div>
+            <div class="c-pres__subjective" v-for="item in 1" v-if="13">
+              <div class="c-pres__qstem--left c-pres__qstem--left--tea">
+                <div class="c-pres__topic-title c-res__add-margin">
+                  1.表述有误的一项是？。
+                  <span class="c-res-itsource">(10分)</span>
+                </div>
+                <div class="c-pres__topic-content">
+                  <div class="c-pres__choice-question">A. 心里很轻松似的，过一会说，我走了；到那边来信</div>
+                  <div class="c-pres__choice-question">A. 心里很轻松似的，过一会说，我走了；到那边来信</div>
+                  <div class="c-pres__choice-question c-pres-is-rightanswer">A. 心里很轻松似的，过一会说，我走了；到那边来信</div>
+                  <div class="c-pres__choice-question">A. 心里很轻松似的，过一会说，我走了；到那边来信</div>
+                  <!-- 选择题答案 -->
+                  <div class="c-res__postil c-res__answer--show">
+                    <div class="c-res__answer-title">【答案】</div>
+                    <div class="c-res__positl-content c-res__answer-content c-pres__choice__answer">
+                      B
+                    </div>
+                  </div>
+                </div>
+                <div class="analy-paper--charts">
+                  <div class="analy-paper--charts__item">
+                    <p class="analy-paper--charts__tit">
+                      正确率
+                    </p>
+                    <div class="analy-paper--charts__box">
+                      <div class="analy-paper--charts__nums">
+                        <p class="analy-paper--charts__num">
+                          75%
+                        </p>
+                        <p class="analy-paper--charts__tips">
+                          答对20人，占比75%
+                        </p>
+                        <p class="analy-paper--charts__tips">
+                          答错5人，占比25%
+                        </p>
+                      </div>
+                      <ve-ring :data="chartData1" height="220px" :settings="chartSettings" :tooltip-visible='false'
+                               :legend-visible="false" :colors="pieColor" :events="log"></ve-ring>
+                    </div>
+                  </div>
+                  <div class="analy-paper--charts__item">
+                    <p class="analy-paper--charts__tit">选项分布
+                    </p>
+                    <div class="analy-paper--charts__box">
+                      <ve-ring :data="chartData2" height="220px" :settings="chartSettings1" :legend-visible="false"
+                               :colors="pieColor1" :events="log"></ve-ring>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="c-pres__check-operation--right">
+                <div class="c-pres-source__btn">24.5</div>
+              </div>
+            </div>
+          </div>
+          <div class="c-pres__topic--item">
+            <div class="c-dw__question-title">
+              三.填空题<span class="font-color--blue font-size14">【班级正确率70%】</span>
+            </div>
+            <div class="c-pres__subjective" v-for="item in 1">
+              <div class="c-pres__qstem--left c-pres__qstem--left--tea">
+                <div class="c-pres__topic-title c-res__add-margin f-clearfix">
+                  <div class="c-pres__gap-fill-item c-pres__gap-fill-character">4.图中气压名字是</div>
+                  <div class="c-pres__gap-fill-item c-pres__gap-fill-input">
+                    <input type="text" class="c-gap-input__item c-gap_fill-right" v-model="val" readonly>
+                  </div>
+                  <div class="c-pres__gap-fill-item c-pres__gap-fill-character">他是高压</div>
+                  <div class="c-pres__gap-fill-item c-pres__gap-fill-input">
+                    <input type="text" class="c-gap-input__item c-gap_fill-wrong" v-model="val" readonly>
+                  </div>
+                </div>
+                <div class="c-pres__topic-content">
+                  <!-- 选择题答案 -->
+                  <div class="c-res__postil c-res__answer--show">
+                    <div class="c-res__answer-title c-pres__gap-fill">【答案】</div>
+                    <div class="c-res__positl-content c-res__answer-content c-pres__choice__answer">
+                      <div class="c-pres__gap-fill">【第一空】
+                        <span>亚热带</span>
+                      </div>
+                      <div class="c-pres__gap-fill">【第二空】
+                        <span>季风气候</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="c-res__postil c-res__answer--show c-res__kd">
+                  <div class="c-res__answer-title">【考点】</div>
+                  <div class="c-res__positl-content c-res__answer-content c-pres__text">
+                    我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天到徐州见着父亲， 看见满院狼藉的东西，又想起祖母，不禁簌簌地流下眼泪。父亲说，“事已如此，不必难过，好在天无绝人之路！
+                  </div>
+                </div>
+                <div class="c-res__postil c-res__answer--show">
+                  <div class="c-res__answer-title">【解析】</div>
+                  <div class="c-res__positl-content c-res__answer-content c-pres__explin">
+                    我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天
+                  </div>
+                </div>
+              </div>
+              <div class="c-pres__check-operation--right">
+                <div class="c-pres-source__btn">24.5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="analy-paper-radiobox">
+          <div class="m-table">
+            <h3 class="analy-paper-radiobox__tit">
+              总正确率
+              <span class="font-color--green">80%</span>
+            </h3>
+            <table>
+              <tr>
+                <th>题号</th>
+                <th>正确率</th>
+                <th>题号</th>
+                <th>正确率</th>
+                <th>题号</th>
+                <th>正确率</th>
+              </tr>
+              <tr>
+                <td>
+                  第1题
+                </td>
+                <td>
+                  30%
+                </td>
+                <td>
+                  第1题
+                </td>
+                <td>
+                  30%
+                </td>
+                <td>
+                  第1题
+                </td>
+                <td>
+                  30%
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="c-pres__content--right">
+        <div class="c-pres--right-title">题号卡</div>
+        <div class="c-pres--right-con">
+          <div class="c-pres__state-info">
+            <div class="c-pres__state-item c-pres__itemz"><i></i>正确</div>
+            <div class="c-pres__state-item c-pres__itemc"><i></i>错误</div>
+            <div class="c-pres__state-item c-pres__itemd"><i></i>待批改</div>
+          </div>
+          <div class="c-pres-result__content-btn">
+            <div class="c-pres-result__quetion-title">
+              一、选择题（9分）
+            </div>
+            <div class="c-pres-result__btn-items">
+              <div class="c-pres-result__btn-item c-result-iswrong">1</div>
+              <div class="c-pres-result__btn-item c-result-isright">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+            </div>
+          </div>
+          <div class="c-pres-result__content-btn">
+            <div class="c-pres-result__quetion-title">
+              一、填空题（9分）
+            </div>
+            <div class="c-pres-result__btn-items">
+              <div class="c-pres-result__btn-item c-result-iswrong">1</div>
+              <div class="c-pres-result__btn-item c-result-isright">1</div>
+              <div class="c-pres-result__btn-item ">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+            </div>
+          </div>
+          <div class="c-pres-result__content-btn">
+            <div class="c-pres-result__quetion-title">
+              一、阅读理解（9分）
+            </div>
+            <div class="c-pres-result__btn-items">
+              <div class="c-pres-result__btn-item c-result-iswrong">1</div>
+              <div class="c-pres-result__btn-item c-result-isright">1</div>
+              <div class="c-pres-result__btn-item ">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+              <div class="c-pres-result__btn-item">1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data: function () {
+      this.log = {
+        click: function (e) {
+          console.log(e)
+        }
+      }
+      this.chartSettings = {
+        radius: [54, 63],
+        offsetY: 65,
+        animation: false,
+        hoverAnimation: false,
+        label: {
+          normal: {
+            show: false
+          }
+        }
+      }
+      this.chartSettings1 = {
+        radius: [49, 82],
+        offsetY: 100,
+        hoverAnimation: false,
+        label: {
+          normal: {
+            formatter: '{b}:{d}%',
+            color: "#666"
+          }
+        }
+      }
+      this.chartSettings3 = {
+        metrics: ['人数'],
+        series: {
+          barWidth: 200
+        }
+      }
+      this.yAxis = {
+        type: 'category',
+        data: ['全对', '半对', '全错']
+      },
+        this.xAxis = {
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: '#333'
+            }
+          }
+        }
+      this.pieColor = ["#2bd672", "#eee"]                                       //正确率样式
+      this.histogramColor = ["#2697ff"]                                               //柱状图样式
+      this.pieColor1 = ["#fe5a59", "#ffe25a", "#abf258", "#61cfff"]               //选择题样式
+      return {
+        chartData1: {
+          columns: ['状态', '人数'],
+          rows: [
+            {'状态': '答对', '人数': 20},
+            {'状态': '答错', '人数': 5},
+          ],
+
+        },
+        chartData2: {
+          columns: ['选项', '占比'],
+          rows: [
+            {'选项': 'A', '占比': 4},
+            {'选项': 'B', '占比': 6},
+            {'选项': 'C', '占比': 8},
+            {'选项': 'D', '占比': 9},
+          ]
+        },
+        chartData3: {
+          columns: ['得分区间', '人数'],
+          rows: [
+            {'人数': 14},
+            {'人数': 10},
+            {'人数': 6},
+          ]
+        },
+        val: 2233
+      }
+    },
+    methods: {}
+  })
+</script>
+</html>
