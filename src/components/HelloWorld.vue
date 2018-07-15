@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    组件1count is {{dd}}
+    组件1count is {{data}}
   </div>
 </template>
 
@@ -14,15 +14,14 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      'dd': 'dd1'
-    })
+    ...mapState('paper', [
+      'data'
+    ]
+    )
+  },
+  mounted () {
+    console.log(this.data)
   }
-
-  // methods: mapActions([
-  //   'increment',
-  //   'decrement'
-  // ])
 }
 </script>
 

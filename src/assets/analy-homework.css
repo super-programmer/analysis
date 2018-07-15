@@ -1442,10 +1442,14 @@ ul li {
 }
 .c-pres__choice-question {
   font-size: 14px;
-  color: #444;
   line-height: 15px;
   padding-left: 24px;
   margin-bottom:24px;
+}
+/*判断*/
+.c-pres__choice-question--judge{
+  display:inline-block;
+  margin:0 30px 24px 0;
 }
 .c-pres-is-rightanswer {
   color: #14c75e;

@@ -63,3 +63,8 @@ const jointRequestData = function (data) {
   }
   return data
 }
+
+export default {
+  axiosRequest,
+  axiosRequestAll
+}

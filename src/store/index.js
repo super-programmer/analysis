@@ -3,15 +3,19 @@ import Vuex from 'Vuex'
 import getters from './getters'
 import actions from './actions'
 import mutations from './mutaions'
-import paper from './modules/paper'
+import Paper from './modules/paper'
+import Class from './modules/class'
+import Answerdetail from './modules/answerdetail'
 
 Vue.use(Vuex)
 
 const state = {
-  'access_token': ''
+  'access_token': 'ddd'
 }
 const modules = {
-  paper
+  Paper,
+  Class,
+  Answerdetail
 }
 
 const store = new Vuex.Store({

@@ -15,10 +15,14 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "mockjs": "^1.0.1-beta3",
+    "moment": "^2.22.2",
+    "v-charts": "^1.17.8",
+    "v-echarts": "^1.0.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "ygui": "^0.4.4"
+    "ygui": "^0.4.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

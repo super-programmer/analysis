@@ -679,6 +679,7 @@ ul, li, ol {
 }
 
 .analy-sildebar {
+  position:relative;
   float: right;
   width: 275px;
   height: 967px;
