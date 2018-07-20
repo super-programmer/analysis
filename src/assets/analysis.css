@@ -1,3 +1,6 @@
+a:hover{
+  text-decoration:none;
+}
 .font-color--green {
   color: #14c75e;
 }
@@ -274,18 +277,37 @@ ul, li, ol {
   width: 24px;
   background: url('img/icon--course.png') no-repeat center;
 }
-
+.c-analy-heaher__icon--after{
+  background-image:url('img/after.png')
+}
+.c-analy-heaher__icon--test{
+  background-image:url('img/test.png')
+}
+.c-analy-heaher__icon--oncourse{
+  background-image:url('img/oncourse.png')
+}
+.c-analy-heaher__icon--pre{
+  background-image:url('img/pre.png')
+}
 .c-analy-heaher__main {
   padding: 24px 0 0 66px;
 }
 
 .c-analy-tit {
+  max-width:500px;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
   font-weight: bold;
   font-size: 18px;
   color: #333;
 }
 
 .c-analy-tit--secon {
+  max-width:500px;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
   font-size: 14px;
   color: #666;
 }
@@ -379,7 +401,15 @@ ul, li, ol {
   background: #fff;
   border: 1px solid #eee;
 }
-
+.analy-section--null{
+  height:635px;
+  line-height:1000px;
+  font-size:16px;
+  color:#666;
+  text-align:center;
+  background:url('img/zwl.png') no-repeat center #fff;
+  border:1px solid #eee;
+}
 .analy-section__tits {
   border-bottom: 1px solid #f2f2f2;
 }
@@ -606,6 +636,7 @@ ul, li, ol {
 }
 
 .analy-student-details__bar {
+  width:20px;
   display: block;
   height: 3px;
 }
@@ -631,6 +662,10 @@ ul, li, ol {
 }
 
 .analy-student-details__tips {
+  width:144px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
   margin-left: 104px;
 }
 
@@ -677,7 +712,9 @@ ul, li, ol {
 .analy-review-main {
   width: 904px;
 }
-
+.analy-review-main--full{
+  width:100%;
+}
 .analy-sildebar {
   position:relative;
   float: right;
@@ -700,7 +737,7 @@ ul, li, ol {
   left: 0;
   height: 30px;
   width: 100%;
-  background: url('img/pull--up.png') no-repeat center;
+  background: url('img/pull--up.png') no-repeat center #fff;
   border-top: 1px solid #eee;
   cursor: pointer;
 }
@@ -752,7 +789,7 @@ ul, li, ol {
 
 .analy-rank-icon {
   padding: 16px;
-  background: url('img/1.png') no-repeat center;
+  background: url('') no-repeat center;
 }
 
 .analy-rank-icon--1 {

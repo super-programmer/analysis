@@ -10,6 +10,10 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 axios.interceptors.request.use(function (config) {
+  let token = window.localStorage['access_token']
+  if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+    config.headers.Authorization = token
+  }
   // 在发送请求之前做些什么
   return config
 }, function (error) {
@@ -19,7 +23,7 @@ axios.interceptors.request.use(function (config) {
 
 // 或者 可以用Vue.prototype.axiosRequest = function () {}
 // 保存到全局中 使用更加方便 看个人喜好
-const baseurl = 'https://api.yunguiedu.com'
+const baseurl = 'https://api.yunguiedu.com/'
 const axiosRequest = function (obj) {
   var data = jointRequestData(obj.data)
   return axios({

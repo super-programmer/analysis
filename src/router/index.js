@@ -13,16 +13,33 @@ export default new Router({
       path: '/',
       name: 'classprofile',
       component: Classprofile
+    }, {
+      path: '/workdone',
+      name: 'classprofile',
+      component: Classprofile
+    }, {
+      path: '/answer',
+      name: 'classprofile',
+      component: Classprofile
     },
     {
-      path: '/studentDetail',
+      path: '/knowledge',
       name: 'classprofile',
-      component: StudentDetail
+      component: Classprofile
+    }, {
+      path: '/student',
+      name: 'classprofile',
+      component: Classprofile
     },
     {
       path: '/paperDetail',
       name: 'classprofile',
       component: PaperDetail
+    },
+    {
+      path: '/studentDetail',
+      name: 'StudentDetail',
+      component: StudentDetail
     }
   ]
 })

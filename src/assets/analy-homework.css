@@ -1124,7 +1124,7 @@ ul li {
 
 .c-pres-container {
   width: 1200px;
-  margin: 0 auto;
+  margin:20px auto;
   background-color: #f5f5f5;
 }
 
@@ -1235,6 +1235,7 @@ ul li {
 .c-pres__content--right {
   float: left;
   width: 220px;
+  min-height:800px;
   background-color:#fff;
   border:1px solid #eee;
 }
@@ -1334,6 +1335,9 @@ ul li {
   display: block;
   overflow: hidden;
 }
+.c-pres__subjective img{
+  max-width:100%;
+}
 .c-pres__qstem {
   float: left;
 }
@@ -1342,12 +1346,12 @@ ul li {
   min-height: 800px;
 }
 .c-pres__topic--item{
-  padding:20px 20px 20px 64px;
+  padding:20px 20px 20px 16px;
   border-bottom:1px solid #e5e5e5;
   background:#fff;
 }
 .c-pres__subjective {
-  padding:24px 0 0 45px;
+  padding:24px 0 0 0px;
 }
 .c-pres__qstem--left {
   float: left;
@@ -1355,7 +1359,7 @@ ul li {
   border-bottom: 1px dashed #e5e5e5;
 }
 .c-pres__qstem--left--tea{
-  width:685px;
+  width:733px;
 }
 .c-pres__check-operation--right {
   float: right;
@@ -1365,6 +1369,10 @@ ul li {
   font-size: 14px;
   color: #444;
   line-height: 24px;
+}
+/*试卷标题行内 样式初始化*/
+.c-pres__topic-title p{
+  display:inline;
 }
 .c-pres__topic-content {
   line-height:24px;
@@ -1394,7 +1402,7 @@ ul li {
 }
 .c-res__add-margin {
   margin-bottom: 24px;
-  line-height: 14px;
+  /*line-height: 14px;*/
 }
 .c-res__textarea {
   width: 700px;
@@ -1446,6 +1454,9 @@ ul li {
   padding-left: 24px;
   margin-bottom:24px;
 }
+.c-pres__choice-question p{
+  display:inline-block;
+}
 /*判断*/
 .c-pres__choice-question--judge{
   display:inline-block;
@@ -1453,6 +1464,9 @@ ul li {
 }
 .c-pres-is-rightanswer {
   color: #14c75e;
+}
+.c-pres-is-wronganswer {
+  color: #ff3356;
 }
 .c-res-source__input {
   width: 195px;
@@ -1545,11 +1559,12 @@ ul li {
 .c-res__positl-content.c-res__answer-content.c-pres__choice__answer {
   padding-bottom: 0；
 }
+/*填空题目*/
 .c-pres__gap-fill {
   line-height: 24px;
 }
 .c-pres__gap-fill-item {
-  float: left;
+ line-height:24px;
 }
 .c-gap-input__item {
   width: 100px;
@@ -1832,7 +1847,7 @@ input:disabled{
 }
 .c-dw__cloze-option {
   float: left;
-  width: 182px;
+  width: 166px;
   line-height: 14px;
   font-size: 14px;
   color: #444;
@@ -2029,6 +2044,7 @@ input:disabled{
 }
 .c-dw__test-wx-num {
   float: left;
+  width:44px;
   font-size: 16px;
   color: #14c75e;
   margin-right: 20px;

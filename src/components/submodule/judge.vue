@@ -1,6 +1,6 @@
 <template>
   <!--判断-->
-  <div class="c-pres__subjective" v-for="item in 1" v-if="13">
+  <div class="c-pres__subjective">
     <div class="c-pres__qstem--left c-pres__qstem--left--tea">
       <div class="c-pres__topic-title c-res__add-margin">
         1.动能修正系数与断面流速分布有关。
@@ -52,8 +52,8 @@
         </div>
       </div>
     </div>
-    <div class="c-pres__check-operation--right">
-      <div class="c-pres-source__btn">24.5</div>
+    <div class="c-pres__check-operation--right" v-if="studentData.type">
+      <div class="c-pres-source__btn">{{subitem.score}}111</div>
     </div>
   </div>
 </template>
