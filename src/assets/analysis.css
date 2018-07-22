@@ -60,6 +60,7 @@ ul, li, ol {
   width: 61px;
   height: 24px;
   line-height: 24px;
+  font-size:12px;
 }
 
 .u-btn:hover {
@@ -595,7 +596,7 @@ ul, li, ol {
 
 .analy-student-details__item {
   float: left;
-  width: 30%;
+  width: 31%;
   margin-top: 40px;
   padding-left: 46px;
   padding-bottom: 20px;
@@ -662,7 +663,7 @@ ul, li, ol {
 }
 
 .analy-student-details__tips {
-  width:144px;
+  width:152px;
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
@@ -726,11 +727,19 @@ ul, li, ol {
 
 .analy-situation-subject {
   position: relative;
-  max-height: 492px;
+  height: 492px;
   padding-bottom: 46px;
   overflow: hidden;
 }
-
+.analy-situation-subject--pull{
+  height:auto;
+  min-height:492px;
+}
+.analy-situation-subject--pull .analy-situation-pullbtn{
+  transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+  border-bottom:1px solid #eee;
+}
 .analy-situation-pullbtn {
   position: absolute;
   bottom: 0;
@@ -740,6 +749,7 @@ ul, li, ol {
   background: url('img/pull--up.png') no-repeat center #fff;
   border-top: 1px solid #eee;
   cursor: pointer;
+  z-index:111;
 }
 
 .analy-situation-pullbtn--active {
@@ -940,4 +950,35 @@ ul, li, ol {
 }
 .analy-resouce-acc__main__num{
   margin-top:43px;
+}
+/*试卷学生名单列表弹框*/
+.analy-messgesbox-table{
+  line-height:46px;
+  margin-top:14px;
+  border:1px solid #eee;
+}
+.analy-messgesbox-table td{
+  border-bottom:1px solid #eee;
+  padding:0 14px;
+}
+.analy-messgesbox-table__tit{
+  min-width:86px;
+  padding:0;
+  text-align:center;
+  color:#fff;
+  background:#14c75e;
+  border-bottom:1px solid #fff;
+}
+/*重置样式*/
+.el-message-box{
+  width:auto !important;
+  min-width:420px;
+  max-width:876px;
+}
+/*dialog样式*/
+.analy-dialog-chartsbox{position:relative}
+.analy-dialog-chartsbox .u-btn{
+  position:absolute;
+  top:220px;
+  right:24px;
 }

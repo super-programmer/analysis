@@ -47,7 +47,7 @@
           </p>
           <div class="analy-paper--charts__box">
             <ve-ring :data="chartData2" height="220px" :settings="chartSettings1" :legend-visible="false"
-                     :colors="pieColor1" :events="log"></ve-ring>
+                     :colors="pieColor1" ></ve-ring>
           </div>
         </div>
       </div>

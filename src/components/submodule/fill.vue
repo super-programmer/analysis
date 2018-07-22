@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <div class="analy-paper--charts" v-if="data.ratio">
+      <div class="analy-paper--charts" v-if="data.ratio >=0 ">
         <div class="analy-paper--charts__item">
           <p class="analy-paper--charts__tit">
             正确率
@@ -33,10 +33,10 @@
           <div class="analy-paper--charts__box">
             <div class="analy-paper--charts__nums">
               <p class="analy-paper--charts__num">
-                {{(data.ratio).toFixed(0)}}%%
+                {{(data.ratio*100).toFixed(0)}}%
               </p>
               <p class="analy-paper--charts__tips">
-                答对{{data.right3}}人，占比{{(data.ratio).toFixed(0)}}%
+                答对{{data.right3}}人，占比{{(data.ratio*100).toFixed(0)}}%
               </p>
               <p class="analy-paper--charts__tips">
                 答错{{data.right1}}人，占比{{((data.right1/data.total) * 100).toFixed(0)}}%
@@ -46,16 +46,16 @@
               </p>
             </div>
             <ve-ring :data="chartData1" height="220px" :settings="chartSettings" :tooltip-visible='false'
-                     :legend-visible="false" :colors="pieColor" :events="log"></ve-ring>
+                     :legend-visible="false" :colors="pieColor" ></ve-ring>
           </div>
         </div>
         <div class="analy-paper--charts__item">
           <p class="analy-paper--charts__tit">选项分布
           </p>
-          <div class="analy-paper--charts__box">
+          <div class="analy-paper--charts__box" @click="showCharts(data.qcid)">
             <ve-histogram :data="chartData3" height="220px" :legend-visible="false" :barwidth="60"
-                          :settings="chartSettings3" :colors="histogramColor" :events="log" :y-axis="yAxis"
-                          :x-axis="xAxis"></ve-histogram>
+                          :settings="chartSettings3" :colors="histogramColor" :y-axis="yAxis"
+                          :x-axis="xAxis" :events="chartEvents"></ve-histogram>
           </div>
         </div>
       </div>
@@ -67,10 +67,12 @@
 </template>
 
 <script>
+import http from '@/http'
 export default {
   props: ['data', 'subitem', 'studentData', 'index', 'showAnswer'],
   name: 'fill',
   data () {
+    let _this = this
     return {
       chartSettings: {
         radius: [54, 63],
@@ -115,74 +117,121 @@ export default {
       chartData1: {
         columns: ['状态', '人数'],
         rows: [
-          {'状态': '答对', '人数': 20},
-          {'状态': '答错', '人数': 5}
+          // {'状态': '答对', '人数': 20},
+          // {'状态': '答错', '人数': 5}
         ]
-
       },
       chartData3: {
         columns: ['得分区间', '人数'],
-        rows: [
-          // {'人数': 14},
-          // {'人数': 10},
-          // {'人数': 6}
-        ]
+        rows: []
       },
       pieColor: ['#2bd672', '#eee'],
-      histogramColor: ['#2697ff']
+      histogramColor: ['#2697ff'],
+      label: '',
+      studentData1: this.studentData,
+      chartEvents: {
+        click: function (e) {
+          _this.label = e.name
+        }
+      }
     }
   },
-  mounted () {
+  created () {
     this.init()
   },
   methods: {
     init: function () {
       /* 学生详情 */
       if (this.studentData.queRsts) {
-        this.studentData.queRsts.map((item) => {
-          if (this.subitem.qid === item.qid) {
+        this.studentData.queRsts.map(item => {
+          if (this.subitem.qcid === item.qcid) {
             this.subitem.blanks = item.blanks
             this.subitem.score = item.score
-            item.blanks.map((item) => {
-              let className = ''
-              switch (item.right) {
-                case 0:
-                  className = ''
-                  break
-                case 1:
-                  className = 'c-gap_fill-wrong'
-                  break
-                case 2:
-                  className = 'c-gap_fill-right'
-                  break
-              }
-              this.data.stem = this.data.stem.replace(/<img class="c-insertblank-placeholder uid--editor_\d+"\/>/, `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item ${className}" value=${item.value}>`)
-            })
+            if (item.blanks) {
+              item.blanks.map(item => {
+                let className = ''
+                switch (item.right) {
+                  case 0:
+                    className = ''
+                    break
+                  case 1:
+                    className = 'c-gap_fill-wrong'
+                    break
+                  case 2:
+                    className = 'c-gap_fill-right'
+                    break
+                }
+                this.data.stem = this.data.stem.replace(
+                  /<img class="c-insertblank-placeholder uid--editor_\d+"\/>/,
+                  `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item ${className}" value=${
+                    item.value
+                  }>`
+                )
+              })
+            }
           }
         })
       }
       /* 试卷详情 */
       if (this.studentData.analys) {
-        JSON.parse(JSON.stringify(this.studentData.analys)).map((item) => {
-          if (item.qcid === this.data.qcid && item.radio) {
+        JSON.parse(JSON.stringify(this.studentData.analys)).map(item => {
+          if (item.qcid === this.data.qcid && item.ratio) {
             this.data.ratio = item.ratio // 正确率
             this.data.right1 = item.right1 // 错误的人数
             this.data.right2 = item.right2 // 半对的人数
             this.data.right3 = item.right3 // 正确的人数
             this.data.total = item.right3 + item.right2 + item.right1 + item.right0 // 全部人数
+            this.chartData1 = {
+              columns: ['状态', '人数'],
+              rows: [
+                { 状态: '答对', 人数: `${this.data.right3}` },
+                { 状态: '答错', 人数: `${this.data.right1}` }
+              ]
+            }
             let data = []
             let rows = []
-            item.items.map((item) => {
+            item.items.map(item => {
               data.push(item.label)
-              rows.push({'人数': item.value})
+              rows.push({ 人数: item.value })
             })
             this.chartData3.rows = rows
             this.yAxis.data = data
-            console.log(this.chartData3, this.yAxis)
           }
         })
-        this.data.stem = this.data.stem.replace(/<img class="c-insertblank-placeholder uid--editor_\d+"\/>/g, `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item"/>`)
+        this.data.stem = this.data.stem.replace(
+          /<img class="c-insertblank-placeholder uid--editor_\d+"\/>/g,
+          `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item"/>`
+        )
       }
+    },
+    /* 展示图表 */
+    showCharts: function (qcid) {
+      let _this = this
+      let option = {
+        method: 'get',
+        url: `work/home/tasks/${this.studentData.taskId}/analy2/names/${qcid}`
+      }
+      http.axiosRequest(option).then(res => {
+        if (res) {
+          res.data.map(item => {
+            if (item.label === _this.label) {
+              let str = `<table class="analy-messgesbox-table"><tr><td class="analy-messgesbox-table__tit">${
+                item.label
+              }</td><td>${item.names.join('、')}</td></tr></table>`
+              _this.$msgbox({
+                title: '',
+                message: str,
+                showCancelButton: false,
+                showConfirmButton: false,
+                closeOnClickModal: true,
+                dangerouslyUseHTMLString: true
+              })
+                .then(() => {})
+                .catch(() => {})
+            }
+          })
+        }
+      })
     }
   }
 }

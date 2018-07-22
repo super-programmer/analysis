@@ -7,7 +7,7 @@
             <div class="c-pres__tab-show f-clearfix">
               <div class="c-pres--isshow-answer" @click="showAnswer">答案解析</div>
             </div>
-            <div class="c-pres__topic">
+            <div class="c-pres__topic" v-if="content.content">
               <!-- 题干部分 -->
               <div class="c-pres__topic--item" v-for="item in content.content.sections[0].groups">
                 <div class="c-dw__question-title">
@@ -56,7 +56,7 @@
         <div class="c-pres__content--right">
           <div class="c-pres--right-title">题号卡</div>
           <div class="c-pres--right-con">
-            <div class="c-pres-result__content-btn">
+            <div class="c-pres-result__content-btn" v-if="content.content">
               <div v-for="item in content.content.sections[0].groups">
                 <div class="c-pres-result__quetion-title">
                   {{item.ord}}、{{item.title}}（{{item.score}}分）
@@ -87,7 +87,7 @@ export default {
   data: function () {
     return {
       showAnswerFlag: false, // 答案解析
-      canShow: false // 答案解析
+      canShow: false // 可以渲染
     }
   },
   computed: {
@@ -97,23 +97,28 @@ export default {
     })
   },
   created () {
-    let data = {
-      taskId: 1551,
-      resId: 2029,
-      refId: 2516,
-      type: 'tea'
-    }
-    this.initPaper(data).then(() => {
-      this.canShow = true
-    })
+    this.init()
   },
   mounted () {
     /* 添加试卷标识 */
+
   },
   methods: {
     ...mapActions('Paper', {
       initPaper: 'initPaper'
     }),
+    async init () {
+      let data = {
+        taskId: this.$route.params[0].split('/')[0],
+        resId: this.$route.params[0].split('/')[1],
+        refId: this.$route.params[0].split('/')[2],
+        type: 'tea'
+      }
+      await this.initPaper(data).then(() => {
+        console.log('ddd2')
+        this.canShow = true
+      })
+    },
     showAnswer: function () {
       this.showAnswerFlag = !this.showAnswerFlag
     }

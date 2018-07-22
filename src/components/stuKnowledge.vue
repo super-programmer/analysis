@@ -15,7 +15,7 @@
             {{item.name}}
           </td>
           <td>
-            {{item.ratio}}%
+            {{(item.ratio*100).toFixed(0)}}%
           </td>
         </tr>
       </table>

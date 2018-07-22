@@ -32,12 +32,12 @@ export default new Router({
       component: Classprofile
     },
     {
-      path: '/paperDetail',
+      path: '/paperDetail/*',
       name: 'classprofile',
       component: PaperDetail
     },
     {
-      path: '/studentDetail',
+      path: '/studentDetail/*',
       name: 'StudentDetail',
       component: StudentDetail
     }

@@ -1,149 +1,25 @@
 import http from '@/http'
-import moment from 'moment'
-import SectionToChinese from '@/common/common'
-let Mock = require('mockjs')
+import {SectionToChinese} from '@/common/common'
 export default {
   namespaced: true,
   state: {
-    // data: {
-    //   'avgRatio': Mock.Random.float(0, 100, 0, 1),
-    //   'avgTime': Mock.Random.integer(0),
-    //   'className': Mock.Random.string(),
-    //   'done': Mock.Random.integer(0, 60),
-    //   'finalOn': '2018-07-15T06:35:03.363Z',
-    //   'late': Mock.Random.integer(0, 20),
-    //   'mark': 0,
-    //   'maxRatio': Mock.Random.float(0, 100, 0, 2),
-    //   'maxTime': Mock.Random.integer(0),
-    //   'minRatio': Mock.Random.float(0, 100, 0, 2),
-    //   'minTime': Mock.Random.integer(0),
-    //   'names': {
-    //     'additionalProp1': [
-    //       'string'
-    //     ],
-    //     'additionalProp2': [
-    //       'string'
-    //     ],
-    //     'additionalProp3': [
-    //       'string'
-    //     ]
-    //   },
-    //   'pubOn': moment('2018-07-15T06:35:03.363Z').format('YYYY-MM-DD hh:mm:ss'),
-    //   'refId': 0,
-    //   'resIcon': 'string',
-    //   'resId': 0,
-    //   'resName': Mock.Random.string(),
-    //   'title': Mock.Random.string(),
-    //   'total': Mock.Random.integer(60, 100),
-    //   'undo': 0,
-    //   'users': [
-    //     {
-    //       'name': Mock.Random.name(),
-    //       'rank': Mock.Random.integer(0, 100),
-    //       'ratio': Mock.Random.float(0, 100, 0, 2),
-    //       'score': Mock.Random.integer(0, 100),
-    //       'usedTime': Mock.Random.integer(0),
-    //       'userId': 0
-    //     }, {
-    //       'name': Mock.Random.name(),
-    //       'rank': Mock.Random.integer(0, 100),
-    //       'ratio': Mock.Random.float(0, 100, 0, 2),
-    //       'score': Mock.Random.integer(0, 100),
-    //       'usedTime': Mock.Random.integer(0),
-    //       'userId': 0
-    //     }, {
-    //       'name': Mock.Random.name(),
-    //       'rank': Mock.Random.integer(0, 100),
-    //       'ratio': Mock.Random.float(0, 100, 0, 2),
-    //       'score': Mock.Random.integer(0, 100),
-    //       'usedTime': Mock.Random.integer(0),
-    //       'userId': 0
-    //     }, {
-    //       'name': Mock.Random.name(),
-    //       'rank': Mock.Random.integer(0, 100),
-    //       'ratio': Mock.Random.float(0, 100, 0, 2),
-    //       'score': Mock.Random.integer(0, 100),
-    //       'usedTime': Mock.Random.integer(0),
-    //       'userId': 0
-    //     }, {
-    //       'name': Mock.Random.name(),
-    //       'rank': Mock.Random.integer(0, 100),
-    //       'ratio': Mock.Random.float(0, 100, 0, 2),
-    //       'score': Mock.Random.integer(0, 100),
-    //       'usedTime': Mock.Random.integer(0),
-    //       'userId': 0
-    //     }
-    //   ]
-    // },
     data: {},
     studentList: {},
-    // studentList: {
-    //   maxRatio: [Mock.Random.name(), Mock.Random.name()],
-    //   minRatio: [Mock.Random.name(), Mock.Random.name()],
-    //   maxTime: [Mock.Random.name(), Mock.Random.name()],
-    //   minTime: [Mock.Random.name(), Mock.Random.name()]
-    // }, // 学生得分列表
-    // bigs: [
-    //   {
-    //     'id': 0,
-    //     'name': 'string',
-    //     'qids': [
-    //       0
-    //     ],
-    //     'ratio': 0,
-    //     'remark': 'string',
-    //     'score': 0,
-    //     'total': 0
-    //   }], // 大题正确率结果列表
     bigs: [], // 大题正确率结果列表
-    // grades: [
-    //   {
-    //     'qid': 0,
-    //     'ratio': 0,
-    //     'right': 0,
-    //     'score': 0
-    //   }
-    // ], // 题目平均成绩
     grades: [], // 题目平均成绩
-    analys: [
-      {
-        'items': [
-          {
-            'key': 'string',
-            'label': 'string',
-            'value': 0
-          }
-        ],
-        'qcid': 0,
-        'qid': 0,
-        'ratio': Mock.Random.float(0, 100, 0, 1),
-        'right0': 0,
-        'right1': 0,
-        'right2': 0,
-        'right3': 0,
-        'score': 0
-      }
-    ], // 题目分析结果
-    knos: [
-      {
-        'id': Mock.Random.integer(0),
-        'name': Mock.Random.string(),
-        'qids': [
-          Mock.Random.integer(0), Mock.Random.integer(0)
-        ],
-        'ratio': Mock.Random.float(0, 100, 0, 2),
-        'remark': 'string',
-        'score': Mock.Random.integer(0),
-        'total': Mock.Random.integer(2)
-      }
-    ], // 知识点分析
-    queNum: Mock.Random.integer(2), // 小题数目
+    analys: [], // 题目分析结果
+    knos: [], // 知识点分析
+    queNum: '', // 小题数目
     content: {},
+    gradeData: {},
     publishFlag: false
   },
   getters: {
     state (state) {
       return state
+    },
+    studentList (studentList) {
+      return studentList
     }
   },
   mutations: {
@@ -154,13 +30,14 @@ export default {
       state.studentList = data
     },
     GETKNOWLEDGE (state, data) {
+      state.gradeData = data
       state.bigs = data.bigs
       state.grades = data.grades
       state.analys = data.analys
       state.knos = data.knos
-      state.queNum = data.queNum
     },
     GETPAPER (state, data) {
+      state.queNum = data.queNum
       state.content = data.content
     },
     GETPUBLISHFLAG (state, data) {
@@ -220,25 +97,29 @@ export default {
       })
     },
     initPaper ({dispatch, commit}, data) {
+      let _this = data
       return new Promise((resolve, reject) => {
         let option = {
           method: 'get',
-          url: `repository/resource/${data.resId}/paper/${data.refId}`
+          url: `repository/resource/${_this.resId}/paper/${_this.refId}`
         }
         let knowledgeoption = {
           method: 'get',
-          url: `work/home/tasks/${data.taskId}/analy2/ques`
+          url: `work/home/tasks/${_this.taskId}/analy2/ques`
         }
         /* 请求知识点分析 */
         http.axiosRequest(knowledgeoption).then((res) => {
+          res.data.taskId = _this.taskId
           let data = res.data
           if (data) {
             commit('GETKNOWLEDGE', data)
             /* 请求试卷信息 */
             http.axiosRequest(option).then((res) => {
               if (res) {
+                res.data.queNum = 0
                 // 阿拉伯数字转换
                 res.data.content.content.sections[0].groups.map((item) => {
+                  res.data.queNum += item.ques.length
                   item.ord = SectionToChinese(item.ord)
                 })
                 res.data.content.content.sections[0].groups.map((item) => {
