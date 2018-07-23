@@ -70,19 +70,19 @@ ul, li, ol {
 }
 
 .u-btn--orange {
-  filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ffb83d, endcolorstr=#ff7e18, gradientType=0);
-  -ms-filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ffb83d, endcolorstr=#ff7e18, gradientType=0);
+  /*filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ffb83d, endcolorstr=#ff7e18, gradientType=0);*/
+  /*-ms-filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ffb83d, endcolorstr=#ff7e18, gradientType=0);*/
   background: #ff7e18; /* 一些不支持背景渐变的浏览器 */
-  background: -moz-linear-gradient(left, #ffb83d, #ff7e18);
-  background: -webkit-gradient(linear, 0 0, right 0, from(#ffb83d), to(#ff7e18));
+  /*background: -moz-linear-gradient(left, #ffb83d, #ff7e18);*/
+  /*background: -webkit-gradient(linear, 0 0, right 0, from(#ffb83d), to(#ff7e18));*/
 }
 
 .u-btn--green {
-  filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#62d442, endcolorstr=#14c75f, gradientType=0);
-  -ms-filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#62d442, endcolorstr=#14c75f, gradientType=0);
+  /*filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#62d442, endcolorstr=#14c75f, gradientType=0);*/
+  /*-ms-filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=88, finishy=0) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#62d442, endcolorstr=#14c75f, gradientType=0);*/
   background: #14c75f; /* 一些不支持背景渐变的浏览器 */
-  background: -moz-linear-gradient(left, #62d442, #14c75f);
-  background: -webkit-gradient(linear, 0 0, right 0, from(#62d442), to(#14c75f));
+  /*background: -moz-linear-gradient(left, #62d442, #14c75f);*/
+  /*background: -webkit-gradient(linear, 0 0, right 0, from(#62d442), to(#14c75f));*/
 }
 
 .u-btn-sm-green {
@@ -711,16 +711,19 @@ ul, li, ol {
 
 /*班级概况*/
 .analy-review-main {
-  width: 904px;
+  float:right;
+  width: 940px;
+  margin-top:10px;
 }
 .analy-review-main--full{
   width:100%;
 }
 .analy-sildebar {
-  position:relative;
+  position:fixed;
   float: right;
-  width: 275px;
-  height: 967px;
+  width: 240px;
+  height: 240px;
+  margin-top:10px;
   background: #fff;
   border: 1px solid #eee;
 }
@@ -751,11 +754,6 @@ ul, li, ol {
   cursor: pointer;
   z-index:111;
 }
-
-.analy-situation-pullbtn--active {
-  background: url('img/pull--down.png') no-repeat center;
-}
-
 .analy-situation-subject__title {
   height: 50px;
   line-height: 50px !important;

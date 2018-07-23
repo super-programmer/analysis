@@ -60,6 +60,21 @@ export default {
             minTime: []
           }
           let data = res.data
+          /*转换任务类型*/
+          switch(res.data.type){
+            case 1:
+              this.taskClassName = 'c-analy-heaher__icon--pre'
+              break
+            case 2:
+              this.taskClassName = 'c-analy-heaher__icon--oncourse'
+              break
+            case 3:
+              this.taskClassName = 'c-analy-heaher__icon--after'
+              break
+            case 4:
+              this.taskClassName = 'c-analy-heaher__icon--test'
+              break
+          }
           if (data) {
             let paperData = {
               refId: data.refId,
@@ -152,7 +167,7 @@ export default {
         if (data.publishFlag) {
           str = 'closeasw'
         } else {
-          str = 'openeasw'
+          str = 'openasw'
         }
         let option = {
           method: 'post',

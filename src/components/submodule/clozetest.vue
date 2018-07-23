@@ -55,25 +55,25 @@
               第{{i*3 + 0 + 1 }}题
             </td>
             <td :qcid="row[0].qcid" v-if="row[0]" @click="showItemChart(row[0].qcid)" style="cursor:pointer">
-              {{(row[0].ratio)*100}}%
+              {{(row[0].ratio*100).toFixed(0)}}%
             </td>
             <td v-if="row[1]">
               第{{i*3 + 1 + 1 }}题
             </td>
             <td :qcid="row[1].qcid" v-if="row[1]" @click="showItemChart(row[1].qcid)" style="cursor:pointer">
-              {{(row[1].ratio)*100}}%
+              {{(row[1].ratio*100).toFixed(0)}}%
             </td>
             <td :qcid="row[2].qcid" v-if="row[2]">
               第{{i*3 + 2 + 1 }}题
             </td>
             <td v-if="row[2]" @click="showItemChart(row[2].qcid)" style="cursor:pointer">
-              {{(row[2].ratio)*100}}%
+              {{(row[2].ratio*100).toFixed(0)}}%
             </td>
           </tr>
         </table>
       </div>
     </div>
-    <el-dialog title="" :visible.sync="dialogTableVisible">
+    <el-dialog title="" :visible.sync="dialogTableVisible" :append-to-body="true">
       <div class="analy-dialog-chartsbox">
         <ve-ring :data="chartData2" height="220px" :settings="chartSettings1" :legend-visible="false"
                  :colors="pieColor1"></ve-ring>

@@ -23,7 +23,7 @@ axios.interceptors.request.use(function (config) {
 
 // 或者 可以用Vue.prototype.axiosRequest = function () {}
 // 保存到全局中 使用更加方便 看个人喜好
-const baseurl = 'https://api.yunguiedu.com/'
+const baseurl = 'https://api.yunguxt.com/'
 const axiosRequest = function (obj) {
   var data = jointRequestData(obj.data)
   return axios({

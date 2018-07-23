@@ -5,8 +5,8 @@
       <!--侧边栏-->
       <div class="analy-sildebar" id="analySildebar" v-if="data.done">
         <ul class="analy-sildebar-list">
-          <li :class="item.flag ? 'analy-sildebar__item analy-sildebar__item--active' : 'analy-sildebar__item'" v-for="(item,index) in slideBar"  @click="changeBar(index)">
-            <a :href="item.id">
+          <li class="analy-sildebar__item" :class="slideBarIndex === index ? 'analy-sildebar__item--active' : ''" v-for="(item,index) in slideBar"  @click="changeBar(index)">
+            <a  :href="item.id">
               <span class="font-color--999 analy-sildebar__order">{{index + 1}}</span>{{item.tit}}
             </a>
           </li>
@@ -17,10 +17,10 @@
           <i class="c-analy-heaher__icon" :class="className"></i>
           <!--公布答案-->
           <div class="c-analy-heaher__operation">
-            <div class="c-publish-answer-box" v-if="data.done" @click="publishAnswer">
+            <div class="c-publish-answer-box" v-if="data.done">
               <div class="container">
                 <div class="bg_con">
-                  <input id="checked_1" type="checkbox" class="switch" :checked="publishFlag"/>
+                  <input id="checked_1" type="checkbox" class="switch" v-model="publishFlag" :checked="publishFlag" @change="publishAnswer"/>
                   <label for="checked_1"></label>
                 </div>
               </div>
@@ -215,7 +215,7 @@
         </div>
       </div>
       <!--显示题目详情-->
-      <el-dialog title="" :visible.sync="dialogTableVisible">
+      <el-dialog title="" :visible.sync="dialogTableVisible" :append-to-body="true">
         <div>
             <div v-if="content.content">
               <!-- 题干部分 -->
@@ -259,8 +259,7 @@
       </el-dialog>
     </div>
     <!--判断是否是有学生提交-->
-    <div class="analy-back" v-if="data.done" @click="goToTop"></div>
-
+    <!--<div class="analy-back" v-if="data.done" @click="goToTop"></div>-->
   </div>
 </template>
 <script>
@@ -288,11 +287,12 @@ export default {
       },
       pieColor: ['#2bd672', '#eee'],
       slideBar: [
-        {id: '#workdone', 'flag': true, 'tit': '作业完成情况'},
-        {id: '#answer', 'flag': false, 'tit': '答题详情'},
-        {id: '#knowledge', 'flag': false, 'tit': '知识点分析'},
-        {id: '#student', 'flag': false, 'tit': '学生成绩排行'}
+        {id: '#workdone', 'tit': '作业完成情况'},
+        {id: '#answer', 'tit': '答题详情'},
+        {id: '#knowledge', 'tit': '知识点分析'},
+        {id: '#student', 'tit': '学生成绩排行'}
       ],
+      slideBarIndex: 0,
       taskId: '',
       className: '',
       pullClassName: '',
@@ -316,16 +316,18 @@ export default {
     )
   },
   created () {
-    this.taskId = this.getRequest().taskId
-    this.init(this.taskId).then()
+    let _this = this
+    _this.taskId = _this.getRequest().taskId
+    _this.init(_this.taskId).then()
+    /* 页面滚动导航 */
     document.onscroll = function () {
-      var heightTop = document.documentElement.scrollTop || document.body.scrollTop
-      if (heightTop > 0) {
-        heightTop = heightTop > 5 ? heightTop : 0
-        if (document.getElementById('analySildebar')) {
-          document.getElementById('analySildebar').style.top = `${heightTop}px`
+      let heightTop = document.documentElement.scrollTop || document.body.scrollTop
+      _this.slideBar.map((item, index) => {
+        let scrollTop = document.getElementById(item.id.split('#')[1]).offsetTop
+        if (heightTop >= (scrollTop - 140)) {
+          _this.slideBarIndex = index
         }
-      }
+      })
     }
   },
   methods: {
@@ -333,6 +335,13 @@ export default {
       init: 'init',
       publishFun: 'publishAnswer'
     }),
+    publishAnswer: function () {
+      let data = {
+        taskId: this.taskId,
+        publishFlag: this.publishFlag
+      }
+      this.publishFun(data)
+    },
     toStudent: function (index) {
       if (index >= 0) {
         this.$router.push({path: `/studentDetail/${this.taskId}/${index}`})
@@ -343,14 +352,7 @@ export default {
     toPaper: function () {
       this.$router.push({path: `/paperDetail/${this.taskId}/${this.data.resId}/${this.data.refId}`})
     },
-    /* 公布答案 */
-    publishAnswer: function () {
-      let data = {
-        taskId: this.taskId,
-        publishFlag: this.publishFlag
-      }
-      this.publishFun(data)
-    },
+
     changeBar: function ($index) {
       this.slideBar.map((item) => {
         item.flag = false
@@ -393,6 +395,16 @@ export default {
       this.dialogTableVisible = true
       this.activeQcid = data
     }
+  },
+  watch: {
+    // /* 公布答案 */
+    // publishFlag: function () {
+    //   let data = {
+    //     taskId: this.taskId,
+    //     publishFlag: this.publishFlag
+    //   }
+    //   this.publishFun(data)
+    // }
   },
   components: {
     fill: fill,
