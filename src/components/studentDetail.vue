@@ -172,7 +172,7 @@ export default {
       showAnswerFlag: false, // 答案解析
       showKnowFlag: false, // tabs切换
       taskId: this.$route.params[0].split('/')[0], // 任务id
-      workId: this.getRequest().workId, // 作业id
+      workId: '', // 作业id
       activeIndex: this.$route.params[0].split('/')[1] || 0
     }
   },
@@ -185,7 +185,7 @@ export default {
     )
   },
   mounted () {
-    console.log(this.data)
+
   },
   methods: {
     ...mapActions('Student', {

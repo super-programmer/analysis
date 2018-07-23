@@ -21,6 +21,10 @@ export default new Router({
       name: 'classprofile',
       component: Classprofile
     }, {
+      path: '/studentDetail',
+      name: 'StudentDetail',
+      component: StudentDetail
+    }, {
       path: '/answer',
       name: 'classprofile',
       component: Classprofile

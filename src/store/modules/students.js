@@ -27,6 +27,19 @@ export default {
   actions: {
     async 'initStudent' (store, data) {
       const { commit, dispatch, state, rootState, rootGetters } = store
+      /* 单个学生页面 */
+      if (data.workId) {
+        let option = {
+          method: 'get',
+          url: `work/home/works/${data.workId}/analy2`
+        }
+        await http.axiosRequest(option).then((res) => {
+          if (res) {
+            console.log(res)
+          }
+        })
+        return
+      }
       await dispatch('Class/init', data.taskId, {root: true})
       const studentList = rootGetters['Class/studentList'].data.users
       commit('GETSTUDENT', rootState.Class.data)
@@ -61,7 +74,6 @@ export default {
           })
           res.data.doneOn = setTime(res.data.doneOn)
           res.data.type = true
-
           if (res) commit('GETORIN', res.data)
         })
       } catch (error) { console.log(error) }
