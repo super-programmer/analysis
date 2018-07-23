@@ -14,13 +14,13 @@
       </div>
       <div class="analy-review-main" :class="!data.done ? 'analy-review-main--full': ''">
         <div class="c-analy-heaher">
-          <i class="c-analy-heaher__icon" :class="className"></i>
+          <i class="c-analy-heaher__icon" :class="data.className"></i>
           <!--公布答案-->
           <div class="c-analy-heaher__operation">
             <div class="c-publish-answer-box" v-if="data.done">
               <div class="container">
                 <div class="bg_con">
-                  <input id="checked_1" type="checkbox" class="switch" v-model="publishFlag" :checked="publishFlag" @change="publishAnswer"/>
+                  <input id="checked_1" type="checkbox" class="switch"  :checked="publishFlag" @change="publishAnswer()"/>
                   <label for="checked_1"></label>
                 </div>
               </div>
@@ -340,6 +340,7 @@ export default {
         taskId: this.taskId,
         publishFlag: this.publishFlag
       }
+      console.log(data)
       this.publishFun(data)
     },
     toStudent: function (index) {
@@ -396,16 +397,6 @@ export default {
       this.activeQcid = data
     }
   },
-  watch: {
-    // /* 公布答案 */
-    // publishFlag: function () {
-    //   let data = {
-    //     taskId: this.taskId,
-    //     publishFlag: this.publishFlag
-    //   }
-    //   this.publishFun(data)
-    // }
-  },
   components: {
     fill: fill,
     essay: essay,
@@ -416,6 +407,5 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 </style>

@@ -4,7 +4,10 @@ import HelloWorld from '@/components/HelloWorld'
 import Classprofile from '@/components/classprofile'
 import StudentDetail from '@/components/studentDetail'
 import PaperDetail from '@/components/paperDetail'
-
+import studentPreAnalyze from '@/components/studentPreAnalyze'
+import teacherPreAnalyze from '@/components/teacherPreAnalyze'
+import teacherUserPreAnalyze from '@/components/teacherUserPreAnalyze'
+import teacherVedio from '@/components/teacherVedio'
 Vue.use(Router)
 
 export default new Router({
@@ -37,9 +40,24 @@ export default new Router({
       component: PaperDetail
     },
     {
-      path: '/studentDetail/*',
-      name: 'StudentDetail',
-      component: StudentDetail
-    }
+      path: '/studentPreAnalyze',
+      name: 'studentPreAnalyze',
+      component: studentPreAnalyze
+    },
+    {
+      path: '/teacherPreAnalyze',
+      name: 'teacherPreAnalyze',
+      component: teacherPreAnalyze
+    },
+    {
+      path: '/teacherUserPreAnalyze',
+      name: 'teacherUserPreAnalyze',
+      component: teacherUserPreAnalyze
+    },
+    {
+      path: '/teacherVedio',
+      name: 'teacherVedio',
+      component: teacherVedio
+    },
   ]
 })

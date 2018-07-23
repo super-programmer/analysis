@@ -60,19 +60,19 @@ export default {
             minTime: []
           }
           let data = res.data
-          /*转换任务类型*/
-          switch(res.data.type){
+          /* 转换任务类型 */
+          switch (res.data.type) {
             case 1:
-              this.taskClassName = 'c-analy-heaher__icon--pre'
+              res.data.taskClassName = 'c-analy-heaher__icon--pre'
               break
             case 2:
-              this.taskClassName = 'c-analy-heaher__icon--oncourse'
+              res.data.taskClassName = 'c-analy-heaher__icon--oncourse'
               break
             case 3:
-              this.taskClassName = 'c-analy-heaher__icon--after'
+              res.data.taskClassName = 'c-analy-heaher__icon--after'
               break
             case 4:
-              this.taskClassName = 'c-analy-heaher__icon--test'
+              res.data.taskClassName = 'c-analy-heaher__icon--test'
               break
           }
           if (data) {

@@ -2,7 +2,8 @@
   <div class="c-pre-student">
     <div class="c-pres-container">
       <div class="c-pres__content f-clearfix">
-        <div class="c-pres__content--left">
+        <!--学生端进入学生详情隐藏学生列表-->
+        <div class="c-pres__content--left" v-if="!workId">
           <div class="c-pres__content--left-item  text-ovh" v-for="(item,index) in studentList" :userId="item.userId" :class="index === activeIndex ? 'c-pres-item--is-active' : ''" @click="checkUse(index)">
             <span class="c-pres_name-position text-ovh">
               {{item.name}}
@@ -151,7 +152,11 @@ import judge from './submodule/judge'
 export default {
   name: 'studentDetail',
   created () {
-    this.initStudent({taskId: this.taskId, activeIndex: this.activeIndex}).then()
+    if (this.workId) {
+      this.initStudent({workId: this.workId}).then()
+    } else {
+      this.initStudent({taskId: this.taskId, activeIndex: this.activeIndex}).then()
+    }
   },
   data: function () {
     return {
@@ -167,6 +172,7 @@ export default {
       showAnswerFlag: false, // 答案解析
       showKnowFlag: false, // tabs切换
       taskId: this.$route.params[0].split('/')[0], // 任务id
+      workId: this.getRequest().workId, // 作业id
       activeIndex: this.$route.params[0].split('/')[1] || 0
     }
   },
@@ -198,6 +204,19 @@ export default {
           this.showKnowFlag = true
         }
       })
+    },
+    // 获取taskId
+    getRequest: function () {
+      var url = location.search // 获取url中"?"符后的字串
+      var theRequest = new Object()
+      if (url.indexOf('?') != -1) {
+        var str = url.substr(1),
+          strs = str.split('&')
+        for (var i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+        }
+      }
+      return theRequest
     },
     checkUse: function (index) {
       this.activeIndex = index

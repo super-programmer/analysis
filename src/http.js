@@ -27,7 +27,7 @@ const baseurl = 'https://api.yunguxt.com/'
 const axiosRequest = function (obj) {
   var data = jointRequestData(obj.data)
   return axios({
-    method: obj.method,
+    method: obj.method || 'get',
     url: baseurl + obj.url,
     data: qs.stringify(data, {allowDots: true}),
     headers: {

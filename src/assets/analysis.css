@@ -10,7 +10,7 @@ a:hover{
 }
 
 .font-color--orange {
-  color: #f60;
+  color: #ff3356;
 }
 
 .font-color--yellow {
@@ -256,6 +256,17 @@ ul, li, ol {
   background: #eefaf3;
 }
 
+.m-table--right{
+  background: url('img/table-right.png') no-repeat center;
+  height: 100%;
+  /* width: 100%; */
+}
+.m-table--wrong{
+  background: url('img/table-wrong.png') no-repeat center;
+  height: 100%;
+  /* width: 100%; */
+}
+
 /*公共头部*/
 .c-analy-heaher {
   position: relative;
@@ -480,6 +491,14 @@ ul, li, ol {
   background: url('img/icon--doc.png') no-repeat center;
 }
 
+.analy-resouce-type--vedio {
+  background: url('img/icon--video.png') no-repeat center;
+}
+
+.analy-resouce-type--paper {
+  background: url('img/icon--paper.png') no-repeat center;
+}
+
 .analy-resouce-name {
   float: left;
   width: 480px;
@@ -498,7 +517,12 @@ ul, li, ol {
   width: 192px;
   padding-left: 24px;
 }
-
+.analy-resouce-tips__noComplete{
+  background: url('img/icon--nocomplete.png') no-repeat center;
+  height: 100%;
+  margin-left: 400px
+  /* width: 1000px; */
+}
 .analy-resouce-tips__item .c-analy__icon {
   margin: 40px 12px 0 0;
   float: left;
@@ -754,6 +778,11 @@ ul, li, ol {
   cursor: pointer;
   z-index:111;
 }
+
+.analy-situation-pullbtn--active {
+  background: url('img/pull--down.png') no-repeat center;
+}
+
 .analy-situation-subject__title {
   height: 50px;
   line-height: 50px !important;
