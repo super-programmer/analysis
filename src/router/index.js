@@ -13,7 +13,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/index',
+      path: '/',
       name: 'classprofile',
       component: Classprofile
     }, {
@@ -21,7 +21,7 @@ export default new Router({
       name: 'classprofile',
       component: Classprofile
     }, {
-      path: '/studentDetail',
+      path: '/studentDetail/*',
       name: 'StudentDetail',
       component: StudentDetail
     }, {

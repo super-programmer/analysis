@@ -152,13 +152,8 @@ import judge from './submodule/judge'
 export default {
   name: 'studentDetail',
   created () {
-    this.workId = this.getRequest().workId
-    console.log(this.workId)
-    if (this.workId) {
-      this.initStudent({workId: this.workId}).then()
-    } else {
-      this.initStudent({taskId: this.taskId, activeIndex: this.activeIndex}).then()
-    }
+    debugger
+    this.initStudent({taskId: this.taskId, activeIndex: this.activeIndex}).then()
   },
   data: function () {
     return {
@@ -174,7 +169,6 @@ export default {
       showAnswerFlag: false, // 答案解析
       showKnowFlag: false, // tabs切换
       taskId: this.$route.params[0].split('/')[0] || '', // 任务id
-      workId: '', // 作业id
       activeIndex: this.$route.params[0].split('/')[1] || 0
     }
   },
@@ -206,19 +200,6 @@ export default {
           this.showKnowFlag = true
         }
       })
-    },
-    // 获取taskId
-    getRequest: function () {
-      var url = location.search // 获取url中"?"符后的字串
-      var theRequest = new Object()
-      if (url.indexOf('?') != -1) {
-        var str = url.substr(1),
-          strs = str.split('&')
-        for (var i = 0; i < strs.length; i++) {
-          theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
-        }
-      }
-      return theRequest
     },
     checkUse: function (index) {
       this.activeIndex = index

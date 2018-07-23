@@ -323,7 +323,9 @@ export default {
     document.onscroll = function () {
       let heightTop = document.documentElement.scrollTop || document.body.scrollTop
       _this.slideBar.map((item, index) => {
-        let scrollTop = document.getElementById(item.id.split('#')[1]).offsetTop
+        if (document.getElementById(item.id.split('#')[1])) {
+          let scrollTop = document.getElementById(item.id.split('#')[1]).offsetTop
+        }
         if (heightTop >= (scrollTop - 140)) {
           _this.slideBarIndex = index
         }

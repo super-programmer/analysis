@@ -28,10 +28,10 @@ export default {
     async 'initStudent' (store, data) {
       const { commit, dispatch, state, rootState, rootGetters } = store
       /* 单个学生页面 */
-      if (data.workId) {
+      if (data.taskId === 'student') {
         let option = {
           method: 'get',
-          url: `work/home/works/${data.workId}/analy2`
+          url: `work/home/works/${data.activeIndex}/analy2`
         }
         await http.axiosRequest(option).then((res) => {
           if (res) {

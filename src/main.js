@@ -26,7 +26,7 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
-    window.localStorage['access_token'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5NDMxNzQiLCJleHAiOjE1MzIzMzUwODAsInVpZCI6OTQzMTc0LCJraWQiOjQ5MSwibmFtZSI6IuaWsOWtpueUnyIsInR5cCI6ImFjYyIsInBpZCI6IlU5NDMxNzRTNlIxIiwicmlkIjoxLCJhdXMiOlsiUk9MRV9BVVRIRUQiLCJST0xFX1NUVURFTlQi' +
-      'XSwic2lkIjo2fQ.XxomnuiubdbablNuoiXDsPdmWu2KaBbARKobmdzrgPE'
+    window.localStorage['access_token'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5NDMxNzQiLCJleHAiOjE1MzIzMzg3MjcsInVpZCI6OTQzMTc0LCJraWQiOjQ5MSwibmFtZSI6IuaWsOWtpueUnyIsInR5cCI6ImFjYyIsInBpZCI6IlU5NDMxNzRTNlIxIiwicmlkIjoxLCJhdXMiOls' +
+      'iUk9MRV9BVVRIRUQiLCJST0xFX1NUVURFTlQiXSwic2lkIjo2fQ.0lYMHyUkuk93aS7Se0etyCPDCTT9na54T0brBQdar_g'
   }
 })
