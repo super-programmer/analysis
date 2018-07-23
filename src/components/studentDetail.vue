@@ -152,6 +152,8 @@ import judge from './submodule/judge'
 export default {
   name: 'studentDetail',
   created () {
+    this.workId = this.getRequest().workId
+    console.log(this.workId)
     if (this.workId) {
       this.initStudent({workId: this.workId}).then()
     } else {
@@ -171,7 +173,7 @@ export default {
       ], // 答案解析
       showAnswerFlag: false, // 答案解析
       showKnowFlag: false, // tabs切换
-      taskId: this.$route.params[0].split('/')[0], // 任务id
+      taskId: this.$route.params[0].split('/')[0] || '', // 任务id
       workId: '', // 作业id
       activeIndex: this.$route.params[0].split('/')[1] || 0
     }
