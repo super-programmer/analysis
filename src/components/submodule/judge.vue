@@ -2,7 +2,7 @@
   <!--判断-->
   <div class="c-pres__subjective">
     <div class="c-pres__qstem--left c-pres__qstem--left--tea">
-      <div class="c-pres__topic-title c-res__add-margin">
+      <div class="c-pres__topic-title c-res__add-margin" :id="subitem.qid">
         1.动能修正系数与断面流速分布有关。
         <span class="c-res-itsource">(10分)</span>
       </div>

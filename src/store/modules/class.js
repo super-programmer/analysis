@@ -25,6 +25,7 @@ export default {
   mutations: {
     GETORIN (state, data) {
       state.data = data
+      state.publishFlag = data.publishFlag
     },
     SELECTSTU (state, data) {
       state.studentList = data
@@ -61,19 +62,25 @@ export default {
           }
           let data = res.data
           /* 转换任务类型 */
-          switch (res.data.type) {
+          switch (data.type) {
             case 1:
-              res.data.taskClassName = 'c-analy-heaher__icon--pre'
+              data.taskClassName = 'c-analy-heaher__icon--pre'
               break
             case 2:
-              res.data.taskClassName = 'c-analy-heaher__icon--oncourse'
+              data.taskClassName = 'c-analy-heaher__icon--oncourse'
               break
             case 3:
-              res.data.taskClassName = 'c-analy-heaher__icon--after'
+              data.taskClassName = 'c-analy-heaher__icon--after'
               break
             case 4:
-              res.data.taskClassName = 'c-analy-heaher__icon--test'
+              data.taskClassName = 'c-analy-heaher__icon--test'
               break
+          }
+          /* 根据数据库数据 显示公布答案状态 */
+          if (data.openAswOn) {
+            data.publishFlag = true
+          } else {
+            data.publishFlag = false
           }
           if (data) {
             let paperData = {

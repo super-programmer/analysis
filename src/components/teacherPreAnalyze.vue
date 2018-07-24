@@ -77,7 +77,7 @@
         <ul>
           <li  v-for="item in paperArray" :key="item.taskId" class="analy-resouce-item">
             <p class="analy-resouce-operation">
-              <input @click="toGotodetail(item.taskId,item.resType)"  type="button" class="u-btn u-btn--lg u-btn--green" value="查看">
+              <input @click="toGotodetail(item.taskId,item.resType,item.resId,item.refId)"  type="button" class="u-btn u-btn--lg u-btn--green" value="查看">
             </p>
             <!-- <p class="analy-resouce-type analy-resouce-type--doc"></p> -->
             <p :class="toJudgeClassType(item.resType)"></p>
@@ -161,7 +161,7 @@ export default {
       paperArray: [],
       dialogTableVisible: false,
       clickType: 0,
-      titleStartTime: ''
+      titleStartTime: '',
     }
   },
   mounted () {
@@ -305,7 +305,7 @@ export default {
     },
     toJudgeClassType (type) {
       if (type == 2) {
-        return 'analy-resouce-type analy-resouce-type--paper'
+          return 'analy-resouce-type analy-resouce-type--paper'
       }
       if (type == 3) {
         return 'analy-resouce-type analy-resouce-type--doc'
@@ -314,9 +314,12 @@ export default {
         return 'analy-resouce-type analy-resouce-type--vedio'
       }
     },
-    toGotodetail (taskId, type) {
+    toGotodetail (taskId, type,resId,refId) {
       if (type != 2) {
         this.$router.push({name: 'teacherVedio', query: {taskId: taskId}})
+      }else{
+        // this.$router.push({path: `/${taskId}/${resId}/${refId}`})
+        this.$router.push({path: `/index/${taskId}`})
       }
     }
   }

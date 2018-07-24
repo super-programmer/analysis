@@ -82,8 +82,8 @@
           <ul>
             <li v-for="item in microClassArray" :key="item.workId" class="analy-resouce-item">
               <p class="analy-resouce-operation">
-                <input v-if="item.doneOn" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
-                <input @click="toComplete(item.workId)" v-if="!item.doneOn" type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
+                <input v-if="item.doneOn" @click="toDetail(item.workId,1,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
+                <input  v-if="!item.doneOn" @click="toComplete(item.workId,1)" type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
               </p>
               <p class="analy-resouce-type analy-resouce-type--vedio"></p>
               <p class="analy-resouce-name">
@@ -117,7 +117,7 @@
             <li class="analy-resouce-item" v-for="item in couseWaveArray" :key="item.workId">
               <p class="analy-resouce-operation">
                 <input v-if="item.doneOn" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
-                <input @click="toComplete(item.workId)" v-if="!item.doneOn" type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
+                <input @click="toComplete(item.workId,2)" v-if="!item.doneOn" type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
               </p>
               <p class="analy-resouce-type analy-resouce-type--doc"></p>
               <p class="analy-resouce-name">
@@ -154,7 +154,7 @@
             <li v-for="item in paperArray" :key="item.workId" class="analy-resouce-item">
               <p class="analy-resouce-operation">
                 <input v-if="item.doneOn" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
-                <input @click="toComplete(item.workId)" v-if="!item.doneOn" type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
+                <input @click="toComplete(item.workId,3)"  type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
               </p>
               <p class="analy-resouce-type analy-resouce-type--paper"></p>
               <p class="analy-resouce-name">
@@ -315,8 +315,21 @@ export default {
         return 'analy-resouce-tips analy-resouce-tips__noComplete'
       }
     },
-    toComplete(workId){
-       window.location.href = 'http://www.yunguxt.com/homework/#/finishHomework?workId=' + workId
+    toComplete(workId,type){
+      if(type == 3){
+        window.location.href = 'https://www.yunguxt.com/homework/#/finishHomework/' + workId
+      }else{
+        debugger
+        window.location.href = 'https://www.yunguxt.com/workviewer/index.html?workId=' + workId
+      }
+    },
+    toDetail(workId,type,resId,refId){
+      if(type == 3){
+         this.$router.push({path: `/paperDetail/${taskId}/${resId}/${refId}`})
+        //window.location.href = 'https://www.yunguxt.com/homework/#/finishHomework?workId=' + workId
+      }else{
+        window.location.href = 'https://www.yunguxt.com/workviewer/index.html/?workId=' + workId
+      }
     },
     toChangeRadio(radio){
       console.log('112233' + radio)

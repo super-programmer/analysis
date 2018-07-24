@@ -3,7 +3,7 @@
   <div class="c-pres__subjective">
     <div class="c-pres__qstem--left c-pres__qstem--left--tea">
       <div class="c-pres__topic-title c-res__add-margin f-clearfix">
-        <div class="c-pres__gap-fill-item c-pres__gap-fill-character" :qcid="data.qcid">
+        <div class="c-pres__gap-fill-item c-pres__gap-fill-character" :id="subitem.qid">
           <span v-if="index">({{index}})</span><span v-if="!index">{{subitem.ord}}</span>.<span v-html="data.stem"></span>
           <span class="c-res-itsource">({{subitem.contents[data.uid].score}}分)</span>
         </div>
@@ -60,12 +60,11 @@
         </div>
       </div>
     </div>
-    <div class="c-pres__check-operation--right" v-if="studentData.type">
+    <div class="c-pres__check-operation--right" v-if="studentData.type && subitem.score">
       <div class="c-pres-source__btn">{{subitem.score}}</div>
     </div>
   </div>
 </template>
-
 <script>
 import http from '@/http'
 export default {
@@ -144,7 +143,7 @@ export default {
       /* 学生详情 */
       if (this.studentData.queRsts) {
         this.studentData.queRsts.map(item => {
-          if (this.subitem.qcid === item.qcid) {
+          if (this.subitem.qid === item.qid || this.subitem.qcid === item.qcid) {
             this.subitem.blanks = item.blanks
             this.subitem.score = item.score
             if (item.blanks) {
@@ -161,12 +160,7 @@ export default {
                     className = 'c-gap_fill-right'
                     break
                 }
-                this.data.stem = this.data.stem.replace(
-                  /<img class="c-insertblank-placeholder uid--editor_\d+"\/>/,
-                  `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item ${className}" value=${
-                    item.value
-                  }>`
-                )
+                this.data.stem = this.data.stem.replace(/<img class="c-blank uid--editor_\d+"\/>/, `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item ${className}" value=${item.value}>`)
               })
             }
           }
@@ -198,9 +192,7 @@ export default {
             this.yAxis.data = data
           }
         })
-        this.data.stem = this.data.stem.replace(
-          /<img class="c-insertblank-placeholder uid--editor_\d+"\/>/g,
-          `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item"/>`
+        this.data.stem = this.data.stem.replace(/<img class="c-insertblank-placeholder uid--editor_\d+"\/>/g, `&nbsp;<input type="text" readonly="readonly" class="c-gap-input__item"/>`
         )
       }
     },

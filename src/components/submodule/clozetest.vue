@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="c-pres__subjective">
-      <div class="c-pres__qstem--left c-pres__qstem--left--tea" :qcid="data.qcid">
+      <div class="c-pres__qstem--left c-pres__qstem--left--tea" :id="subitem.qid">
         <div class="c-dw__question-cloze-text">
           <span v-if="index">({{index}})</span><span v-if="!index">{{subitem.ord}}</span>.
           <span v-html="data.stem"></span>。
@@ -115,7 +115,7 @@ export default {
       studentsList: []// 学生名单列表
     }
   },
-  created () {
+  mounted () {
     this.data.subs.map((item) => {
       item.options.map((sitem) => {
         if (sitem.correct === true) {
@@ -127,8 +127,10 @@ export default {
     this.data.stem = this.data.stem.replace(/<\/p>/g, '</span>')
     if (this.studentData.bigs) {
       JSON.parse(JSON.stringify(this.studentData.bigs)).map((item) => {
-        if (item.id === this.subitem.ord) {
+        console.log(item, this.subitem)
+        if (item.qids[0] === this.subitem.qid) {
           this.subitem.ratio = item.ratio
+          console.log()
         }
       })
     }

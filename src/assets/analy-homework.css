@@ -1124,7 +1124,7 @@ ul li {
 
 .c-pres-container {
   width: 1200px;
-  margin:20px auto;
+  margin:10px auto;
   background-color: #f5f5f5;
 }
 
@@ -1157,6 +1157,7 @@ ul li {
 }
 
 .c-pres__content--center {
+  width:970px;
   min-width: 880px;
   background-color: #fff;
   border:1px solid #eee;
@@ -1183,6 +1184,7 @@ ul li {
 }
 
 .c-pres__content--right {
+  position:relative;
   float: left;
 }
 
@@ -1301,6 +1303,7 @@ ul li {
   margin-right: 12px;
   margin-bottom: 12px;
   float: left;
+  cursor:pointer;
 }
 .c-result-iswrong {
   background-color: #ff3356;
@@ -1310,6 +1313,10 @@ ul li {
 .c-result-isright {
   background-color: #14c75e;
   border-color: #14c75e;
+  color:#fff;
+}
+.c-result-isactive{
+  background:#1890ff;
   color:#fff;
 }
 .c-result-iswait {

@@ -34,9 +34,43 @@ export default {
           url: `work/home/works/${data.activeIndex}/analy2`
         }
         await http.axiosRequest(option).then((res) => {
-          if (res) {
-            console.log(res)
+          let resData = res.data
+          let options = {
+            method: 'get',
+            url: `repository/resource/${resData.resId}/paper/${resData.refId}`
           }
+          http.axiosRequest(options).then((res) => {
+            let content = res.data.content
+            commit('GETPAPER', content)
+            /* 右侧导航题目答案映射 */
+            content.content.sections[0].groups.map((item) => {
+              item.ques.map((smitem) => {
+                resData.queRsts.map((item) => {
+                  if (smitem.qid === item.qid) {
+                    smitem.right = item.right
+                    switch (smitem.right) {
+                      case 0:
+                        smitem.className = ''
+                        break
+                      case 1:
+                        smitem.className = 'c-result-iswrong'
+                        break
+                      case 2:
+                        smitem.className = ''
+                        break
+                      case 3:
+                        smitem.className = 'c-result-iswrong'
+                        break
+                    }
+                  }
+                })
+              })
+            })
+            console.log(res.data.doneOn)
+            resData.doneOn = setTime(resData.doneOn)
+            resData.type = true
+            commit('GETORIN', resData)
+          })
         })
         return
       }

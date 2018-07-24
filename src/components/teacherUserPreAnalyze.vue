@@ -23,13 +23,13 @@
       <!--微课-->
       <div class="analy-section" v-if="microClassArray.length != 0">
         <div class="analy-section__tit">
-          视频
+          微课
         </div>
         <div class="analy-section__main">
             <ul >
               <li v-for="item in microClassArray" :key="item.workId" class="analy-resouce-item">
                 <p class="analy-resouce-operation">
-                  <input type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
+                  <input @click="toDetail(item.workId,item.taskId,1,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 </p>
                 <p class="analy-resouce-type analy-resouce-type--vedio"></p>
                 <p class="analy-resouce-name">
@@ -62,7 +62,7 @@
             <ul>
               <li  v-for="item in couseWaveArray" :key="item.workId" class="analy-resouce-item">
                 <p class="analy-resouce-operation">
-                  <input @click="togotoDetail()" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
+                  <input @click="toDetail(item.workId,item.taskId,2,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 </p>
                 <p class="analy-resouce-type analy-resouce-type--doc"></p>
                 <p class="analy-resouce-name">
@@ -95,7 +95,7 @@
             <ul>
               <li  v-for="item in paperArray" :key="item.workId" class="analy-resouce-item">
                 <p class="analy-resouce-operation">
-                  <input type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
+                  <input @click="toDetail(item.workId,item.taskId,3,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 </p>
                 <p class="analy-resouce-type analy-resouce-type--paper"></p>
                 <p class="analy-resouce-name">
@@ -256,7 +256,14 @@ export default {
       }else{
         return 'analy-resouce-tips analy-resouce-tips__noComplete'
       }
-    }
+    },
+    toDetail(workId,taskId,type,resId,refId){
+      if(type == 3){
+         this.$router.push({path: `/paperDetail/${taskId}/${resId}/${refId}`})
+      }else{
+        window.location.href = 'https://www.yunguxt.com/workviewer/index.html?workId=' + workId
+      }
+    },
   }
 }
 </script>

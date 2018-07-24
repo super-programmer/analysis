@@ -6,15 +6,13 @@
       <div class="analy-sildebar" id="analySildebar" v-if="data.done">
         <ul class="analy-sildebar-list">
           <li class="analy-sildebar__item" :class="slideBarIndex === index ? 'analy-sildebar__item--active' : ''" v-for="(item,index) in slideBar"  @click="changeBar(index)">
-            <a  :href="item.id">
-              <span class="font-color--999 analy-sildebar__order">{{index + 1}}</span>{{item.tit}}
-            </a>
+              <span class="analy-sildebar__order">{{index + 1}}</span>{{item.tit}}
           </li>
         </ul>
       </div>
       <div class="analy-review-main" :class="!data.done ? 'analy-review-main--full': ''">
         <div class="c-analy-heaher">
-          <i class="c-analy-heaher__icon" :class="data.className"></i>
+          <i class="c-analy-heaher__icon" :class="data.taskClassName"></i>
           <!--公布答案-->
           <div class="c-analy-heaher__operation">
             <div class="c-publish-answer-box" v-if="data.done">
@@ -59,7 +57,7 @@
               <div class="analy-student-details__item">
                 <i class="analy-student-details__type analy-student-details__type--acc"></i>
                 <p class="analy-student-details__num" v-if="data.avgRatio >= 0">
-                  <span v-if="data.avgScore === null"><span class="font-color--lightgreen font-size28" >{{(data.avgRatio*100).toFixed(1)}}%</span>班级正确率</span>
+                  <span v-if="data.avgScore === null && data.avgRatio != null"><span class="font-color--lightgreen font-size28" >{{(data.avgRatio*100).toFixed(1)}}%</span>班级正确率</span>
                   <span v-if="data.avgScore != null "><span class="font-color--lightgreen font-size28" >{{(data.avgScore).toFixed(1)}}</span>班级平均分</span>
                 </p>
                 <p class="analy-student-details__num" v-if="data.avgRatio === null && data.avgScore === null">
@@ -68,7 +66,7 @@
                 <p class="analy-student-details__progress">
                   <span class="analy-student-details__bar analy-student-details__bar--lightgreen"></span>
                 </p>
-                <p class="analy-student-details__tips"  v-if="data.maxRatio >= 0">
+                <p class="analy-student-details__tips"  v-if="data.maxRatio >= 0 && data.maxRatio != null">
                   最高:
                   <span class="font-color--lightgreen" v-if="data.maxScore === null" :title="studentList.maxRatio.join(',')">{{(data.maxRatio*100).toFixed(1)}}% {{studentList.maxRatio.join(',')}}</span>
                   <span class="font-color--lightgreen" v-if="data.maxScore != null" :title="studentList.maxRatio.join(',')">{{(data.maxScore).toFixed(1)}}% {{studentList.maxRatio.join(',')}}</span>
@@ -77,7 +75,7 @@
                   最高:
                   <span class="font-color--lightgreen">--</span>
                 </p>
-                <p class="analy-student-details__tips" v-if="data.minRatio >= 0">
+                <p class="analy-student-details__tips" v-if="data.minRatio >= 0 && data.minRatio != null">
                   最低:
                   <span class="font-color--lightgreen" v-if="data.minScore === null " :title="studentList.minRatio.join(',')">{{(data.minRatio*100).toFixed(1)}}% {{studentList.minRatio.join(',')}}</span>
                   <span class="font-color--lightgreen" v-if="data.minScore != null " :title="studentList.minRatio.join(',')">{{(data.minScore).toFixed(1)}}% {{studentList.minRatio.join(',')}}</span>
@@ -143,7 +141,7 @@
                 <div class="analy-situation-subject__con">
                   <div class="analy-situation-subject__item" v-for="smItem in item.ques">
                     <div class="analy-situation-subject__tips" :qid="smItem.qid" :resId="smItem.resId" @click="showDetail(smItem.qid)">
-                      <p class="analy-situation-subject__nums" v-if="smItem.ratio > 0">{{(smItem.ratio*100).toFixed(0)}}%</p>
+                      <p class="analy-situation-subject__nums" v-if="smItem.ratio >= 0">{{(smItem.ratio*100).toFixed(0)}}%</p>
                       <p class="analy-situation-subject__nums" v-if="smItem.ratio === null || 0">--</p>
                       <p class="analy-situation-subject__qid">{{smItem.ord}}</p>
                     </div>
@@ -315,10 +313,12 @@ export default {
     ]
     )
   },
-  created () {
+  mounted () {
     let _this = this
-    _this.taskId = _this.getRequest().taskId
-    _this.init(_this.taskId).then()
+    _this.taskId = this.$route.params[0].split('/')[0] || ''
+    _this.init(_this.taskId).then(() => {
+
+    })
     /* 页面滚动导航 */
     document.onscroll = function () {
       let heightTop = document.documentElement.scrollTop || document.body.scrollTop
@@ -342,7 +342,6 @@ export default {
         taskId: this.taskId,
         publishFlag: this.publishFlag
       }
-      console.log(data)
       this.publishFun(data)
     },
     toStudent: function (index) {
@@ -362,7 +361,7 @@ export default {
       })
       this.slideBar[$index].flag = true
     },
-    /* 回到顶部 */
+    /* /!* 回到顶部 *!/
     goToTop: function () {
       (function smoothscroll () {
         var currentScroll = document.documentElement.scrollTop || document.body.scrollTop
@@ -371,7 +370,7 @@ export default {
           window.scrollTo(0, currentScroll - (currentScroll / 5))
         }
       })()
-    },
+    }, */
     /* 收起 */
     packUp: function () {
       if (this.pullClassName === 'analy-situation-subject--pull') {

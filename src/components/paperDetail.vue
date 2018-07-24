@@ -53,7 +53,7 @@
             </div>
           </div>
         </div>
-        <div class="c-pres__content--right">
+        <div class="c-pres__content--right" id="sideBar">
           <div class="c-pres--right-title">题号卡</div>
           <div class="c-pres--right-con">
             <div class="c-pres-result__content-btn" v-if="content.content">
@@ -62,7 +62,7 @@
                   {{item.ord}}、{{item.title}}（{{item.score}}分）
                 </div>
                 <div class="c-pres-result__btn-items">
-                  <div class="c-pres-result__btn-item" v-for="smItem in item.ques" :class="smItem.className">{{smItem.ord}}</div>
+                  <div class="c-pres-result__btn-item" v-for="smItem in item.ques" :class="smItem.qid === itemActiveIndex ? `c-result-isactive` : ``" @click="slideTo(smItem.qid)">{{smItem.ord}}</div>
                 </div>
               </div>
             </div>
@@ -87,7 +87,9 @@ export default {
   data: function () {
     return {
       showAnswerFlag: false, // 答案解析
-      canShow: false // 可以渲染
+      canShow: false, // 可以渲染
+      itemActivelist: [], // 右侧导航list
+      itemActiveIndex: ''// 右侧导航index
     }
   },
   computed: {
@@ -100,8 +102,6 @@ export default {
     this.init()
   },
   mounted () {
-    /* 添加试卷标识 */
-
   },
   methods: {
     ...mapActions('Paper', {
@@ -115,12 +115,42 @@ export default {
         type: 'tea'
       }
       await this.initPaper(data).then(() => {
-        console.log('ddd2')
+        let _this = this
+        /* 将题目qid整合进一个数组 */
+        console.log(_this.content.content)
+        if (_this.content.content.sections) {
+          _this.content.content.sections[0].groups.map((item) => {
+            item.ques.map((smitem) => {
+              _this.itemActivelist.push(smitem.qid)
+            })
+          })
+          _this.itemActiveIndex = _this.itemActivelist[0]
+        }
+        /* 页面滚动导航 */
+        document.onscroll = function () {
+          let heightTop = document.documentElement.scrollTop || document.body.scrollTop
+          if (heightTop >= 140) {
+            document.getElementById('sideBar').style.top = `${heightTop - 140}px`
+          } else {
+            document.getElementById('sideBar').style.top = 0
+          }
+          _this.itemActivelist.map((item) => {
+            let scrollTop = document.getElementById(item).offsetTop
+            if (heightTop >= (scrollTop - 140)) {
+              _this.itemActiveIndex = item
+            }
+          })
+        }
         this.canShow = true
       })
     },
     showAnswer: function () {
       this.showAnswerFlag = !this.showAnswerFlag
+    },
+    slideTo: function (num) {
+      let _this = this
+      _this.itemActiveIndex = num
+      window.scrollTo(0, document.getElementById(num).offsetTop)
     }
   },
   components: {

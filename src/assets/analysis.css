@@ -843,52 +843,36 @@ ul, li, ol {
 
 /*右侧导航栏*/
 .analy-sildebar-list {
-  margin: 42px 0 0 30px;
-  min-height: 200px;
-  padding-left: 20px;
-  line-height: 30px;
-  border-left: 2px solid #eee;
 }
 
 .analy-sildebar__item {
-  position: relative;
+  height: 30px;
+  font-size: 16px;
+  line-height: 28px;
+  margin-left: 40px;
+  margin-top: 23px;
+  cursor: pointer;
+  border-left: 3px solid #fff;
   cursor: pointer;
 }
 
 .analy-sildebar__item:before {
+  display:none;
   position: absolute;
   content: "";
-  left: -24px;
-  top: 12px;
-  width: 6px;
-  height: 6px;
+  left: 0px;
+  width: 3px;
+  height: 28px;
   background: #14c75e;
-  border-radius: 50%;
 }
-
-.analy-sildebar__item:after {
-  display: none;
-  position: absolute;
-  content: "";
-  left: -17px;
-  top: 11px;
-  border: 4px solid transparent;
-  border-left: 6px solid #14c75e;
+.analy-sildebar__item:hover,
+.analy-sildebar__item--active{
+  color:#14c75e;
 }
-
 .analy-sildebar__item:hover:before,
-.analy-sildebar__item--active:before {
-  left: -27px;
-  top: 9px;
-  width: 12px;
-  height: 12px;
+.analy-sildebar__item--active:before{
+  display:block;
 }
-
-.analy-sildebar__item:hover:after,
-.analy-sildebar__item--active:after {
-  display: block;
-}
-
 .analy-sildebar__order {
   margin-right: 10px;
 }

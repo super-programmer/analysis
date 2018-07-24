@@ -1,7 +1,7 @@
 <template>
   <!--选择-->
   <div class="c-pres__subjective">
-    <div class="c-pres__qstem--left c-pres__qstem--left--tea" :qcid="data.qcid">
+    <div class="c-pres__qstem--left c-pres__qstem--left--tea" :id="subitem.qid">
       <div class="c-pres__topic-title c-res__add-margin">
         <span v-if="index">({{index}})</span><span v-if="!index">{{subitem.ord}}</span>.
         <span v-html="data.stem"></span>。

@@ -1,9 +1,9 @@
 <template>
   <div class="c-pre-student">
-    <div class="c-pres-container">
+    <div class="c-pres-container" v-if="content.content">
       <div class="c-pres__content f-clearfix">
         <!--学生端进入学生详情隐藏学生列表-->
-        <div class="c-pres__content--left" v-if="!workId">
+        <div class="c-pres__content--left" v-if="taskId != 'student'">
           <div class="c-pres__content--left-item  text-ovh" v-for="(item,index) in studentList" :userId="item.userId" :class="index === activeIndex ? 'c-pres-item--is-active' : ''" @click="checkUse(index)">
             <span class="c-pres_name-position text-ovh">
               {{item.name}}
@@ -65,7 +65,7 @@
             </li>
           </ul>
         </div>
-        <div class="c-pres__content--center c-pres__content--center--tea">
+        <div class="c-pres__content--center" :class="taskId === 'student' ?  '' : 'c-pres__content--center--tea'">
           <stuKnowledge :knos="data.knos" v-if="showKnowFlag"></stuKnowledge>
           <div v-if="!showKnowFlag">
             <div class="c-pres__tab-show f-clearfix">
@@ -74,13 +74,13 @@
             <div class="c-pres__topic" v-if="content.content">
               <!-- 题干部分 -->
               <div class="c-pres__topic--item" v-for="item in content.content.sections[0].groups">
-                <div class="c-dw__question-title">
+                <div class="c-dw__question-title" >
                   {{item.ord}}、{{item.title}}
                 </div>
                 <div v-for="subitem in item.ques" v-if="data.bigs">
                   <!--复合题目-->
-                  <div v-if="content.questions[subitem.qid].content.tpl === 6" class="c-pres__subjective" :id="subitem.qcid">
-                    <div class="c-pres__topic-title c-res__add-margin">
+                  <div v-if="content.questions[subitem.qid].content.tpl === 6" class="c-pres__subjective" :id="subitem.qid">
+                    <div class="c-pres__topic-title c-res__add-margin" >
                     <span>
                       {{subitem.ord}}.
                     <span v-html="content.questions[subitem.qid].content.stem"></span>
@@ -117,7 +117,7 @@
             </div>
           </div>
         </div>
-        <div class="c-pres__content--right">
+        <div class="c-pres__content--right" id="sideBar">
           <div class="c-pres--right-title">题号卡</div>
           <div class="c-pres--right-con">
             <div class="c-pres__state-info">
@@ -131,7 +131,9 @@
                   {{item.ord}}、{{item.title}}（{{item.score}}分）
                 </div>
                 <div class="c-pres-result__btn-items">
-                  <div class="c-pres-result__btn-item" v-for="smItem in item.ques" :class="smItem.className">{{smItem.ord}}</div>
+                  <div class="c-pres-result__btn-item"  v-for="smItem in item.ques" :class="smItem.qid === itemActiveIndex ? `c-result-isactive ${smItem.className}` : `${smItem.className}`" @click="slideTo(smItem.qid)">
+                     <span :class="smItem.qid === itemActiveIndex ? 'c-result-isactive' : ''">{{smItem.ord}}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,8 +154,7 @@ import judge from './submodule/judge'
 export default {
   name: 'studentDetail',
   created () {
-    debugger
-    this.initStudent({taskId: this.taskId, activeIndex: this.activeIndex}).then()
+    this.init()
   },
   data: function () {
     return {
@@ -169,8 +170,13 @@ export default {
       showAnswerFlag: false, // 答案解析
       showKnowFlag: false, // tabs切换
       taskId: this.$route.params[0].split('/')[0] || '', // 任务id
-      activeIndex: this.$route.params[0].split('/')[1] || 0
+      activeIndex: this.$route.params[0].split('/')[1] || 0,
+      itemActivelist: [], // 右侧导航list
+      itemActiveIndex: ''// 右侧导航index
     }
+  },
+  mounted () {
+
   },
   computed: {
     ...mapState('Student', [
@@ -179,9 +185,6 @@ export default {
       'content'
     ]
     )
-  },
-  mounted () {
-
   },
   methods: {
     ...mapActions('Student', {
@@ -204,6 +207,39 @@ export default {
     checkUse: function (index) {
       this.activeIndex = index
       this.initStudent({taskId: this.taskId, activeIndex: this.activeIndex}).then()
+    },
+    slideTo: function (num) {
+      let _this = this
+      _this.itemActiveIndex = num
+      window.scrollTo(0, document.getElementById(num).offsetTop)
+    },
+    async init () {
+      let data = {taskId: this.taskId, activeIndex: this.activeIndex}
+      await this.initStudent(data).then(() => {
+        let _this = this
+        /* 将题目qid整合进一个数组 */
+        _this.content.content.sections[0].groups.map((item) => {
+          item.ques.map((smitem) => {
+            _this.itemActivelist.push(smitem.qid)
+          })
+        })
+        _this.itemActiveIndex = _this.itemActivelist[0]
+        /* 页面滚动导航 */
+        document.onscroll = function () {
+          let heightTop = document.documentElement.scrollTop || document.body.scrollTop
+          if (heightTop >= 350) {
+            document.getElementById('sideBar').style.top = `${heightTop - 350}px`
+          } else {
+            document.getElementById('sideBar').style.top = 0
+          }
+          _this.itemActivelist.map((item) => {
+            let scrollTop = document.getElementById(item).offsetTop
+            if (heightTop >= (scrollTop - 350)) {
+              _this.itemActiveIndex = item
+            }
+          })
+        }
+      })
     }
   },
   components: {

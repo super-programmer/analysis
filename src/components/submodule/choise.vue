@@ -2,7 +2,7 @@
   <!--选择-->
   <div class="c-pres__subjective">
     <div class="c-pres__qstem--left c-pres__qstem--left--tea">
-      <div class="c-pres__topic-title c-res__add-margin" :qcid="data.qcid">
+      <div class="c-pres__topic-title c-res__add-margin" :id="subitem.qid">
         <span v-if="index">({{index}})</span><span v-if="!index">{{subitem.ord}}</span>.
         <span v-html="data.stem"></span>。
         <span class="c-res-itsource">({{subitem.contents[data.uid].score}}分)</span>
