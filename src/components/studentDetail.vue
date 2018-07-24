@@ -4,10 +4,9 @@
       <div class="c-pres__content f-clearfix">
         <!--学生端进入学生详情隐藏学生列表-->
         <div class="c-pres__content--left" v-if="taskId != 'student'">
-          <div class="c-pres__content--left-item  text-ovh" v-for="(item,index) in studentList" :userId="item.userId" :class="index === activeIndex ? 'c-pres-item--is-active' : ''" @click="checkUse(index)">
+          <div class="c-pres__content--left-item  text-ovh" v-for="(item) in studentList" :userId="item.userId" :class="(item.userId === userId) ? 'c-pres-item--is-active' : ''" @click="checkUse(item.userId)">
             <span class="c-pres_name-position text-ovh">
               {{item.name}}
-              <!--<span class="c-pres__student&#45;&#45;is-check"></span>-->
               </span>
           </div>
         </div>
@@ -69,7 +68,7 @@
           <stuKnowledge :knos="data.knos" v-if="showKnowFlag"></stuKnowledge>
           <div v-if="!showKnowFlag">
             <div class="c-pres__tab-show f-clearfix">
-              <div class="c-pres--isshow-answer" @click="showAnswer">答案解析</div>
+              <div class="c-pres--isshow-answer" :class="this.showAnswerFlag ? 'font-color--green' : ''" @click="showAnswer">答案解析</div>
             </div>
             <div class="c-pres__topic" v-if="content.content">
               <!-- 题干部分 -->
@@ -153,9 +152,6 @@ import stuKnowledge from './stuKnowledge'
 import judge from './submodule/judge'
 export default {
   name: 'studentDetail',
-  created () {
-    this.init()
-  },
   data: function () {
     return {
       tabs: [
@@ -169,14 +165,11 @@ export default {
       ], // 答案解析
       showAnswerFlag: false, // 答案解析
       showKnowFlag: false, // tabs切换
-      taskId: this.$route.params[0].split('/')[0] || '', // 任务id
-      activeIndex: this.$route.params[0].split('/')[1] || 0,
+      taskId: '', // 任务id
+      userId: 0,
       itemActivelist: [], // 右侧导航list
       itemActiveIndex: ''// 右侧导航index
     }
-  },
-  mounted () {
-
   },
   computed: {
     ...mapState('Student', [
@@ -185,6 +178,11 @@ export default {
       'content'
     ]
     )
+  },
+  mounted () {
+    this.taskId = this.$route.params[0].split('/')[0]
+    this.userId = this.$route.params[0].split('/')[1]
+    this.init()
   },
   methods: {
     ...mapActions('Student', {
@@ -204,9 +202,9 @@ export default {
         }
       })
     },
-    checkUse: function (index) {
-      this.activeIndex = index
-      this.initStudent({taskId: this.taskId, activeIndex: this.activeIndex}).then()
+    checkUse: function (userId) {
+      this.userId = userId
+      this.initStudent({taskId: this.taskId, userId: this.userId}).then()
     },
     slideTo: function (num) {
       let _this = this
@@ -214,9 +212,10 @@ export default {
       window.scrollTo(0, document.getElementById(num).offsetTop)
     },
     async init () {
-      let data = {taskId: this.taskId, activeIndex: this.activeIndex}
+      let data = {taskId: this.taskId, userId: this.userId}
       await this.initStudent(data).then(() => {
         let _this = this
+        _this.userId = _this.userId
         /* 将题目qid整合进一个数组 */
         _this.content.content.sections[0].groups.map((item) => {
           item.ques.map((smitem) => {

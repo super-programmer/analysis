@@ -127,7 +127,6 @@ export default {
     this.data.stem = this.data.stem.replace(/<\/p>/g, '</span>')
     if (this.studentData.bigs) {
       JSON.parse(JSON.stringify(this.studentData.bigs)).map((item) => {
-        console.log(item, this.subitem)
         if (item.qids[0] === this.subitem.qid) {
           this.subitem.ratio = item.ratio
           console.log()

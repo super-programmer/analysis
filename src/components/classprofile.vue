@@ -5,7 +5,7 @@
       <!--侧边栏-->
       <div class="analy-sildebar" id="analySildebar" v-if="data.done">
         <ul class="analy-sildebar-list">
-          <li class="analy-sildebar__item" :class="slideBarIndex === index ? 'analy-sildebar__item--active' : ''" v-for="(item,index) in slideBar"  @click="changeBar(index)">
+          <li class="analy-sildebar__item" :class="slideBarIndex === index ? 'analy-sildebar__item--active' : ''" v-for="(item,index) in slideBar"  @click="changeBar(index,item.id)">
               <span class="analy-sildebar__order">{{index + 1}}</span>{{item.tit}}
           </li>
         </ul>
@@ -24,9 +24,9 @@
               </div>
               <p>公布答案</p>
             </div>
-            <input type="button" class="u-btn u-btn--orange" value="作业详情">
+            <input type="button" class="u-btn u-btn--orange" value="作业详情" @click="toWorkDetail(data)">
           </div>
-          <!--跳转作业详情-->
+          <!--作业详情-->
           <div class="c-analy-heaher__main">
             <h3 class="c-analy-tit" :title="data.title">
               {{data.title}}
@@ -34,8 +34,8 @@
             <p class="c-analy-tit--secon" :title="data.resName">
               {{data.resName}}
               <span class="c-analy-type-tips">
-              word
-          </span>
+                试卷
+              </span>
             </p>
             <p class="c-analy-tips">
           <span class="c-analy-tip">
@@ -285,12 +285,12 @@ export default {
       },
       pieColor: ['#2bd672', '#eee'],
       slideBar: [
-        {id: '#workdone', 'tit': '作业完成情况'},
-        {id: '#answer', 'tit': '答题详情'},
-        {id: '#knowledge', 'tit': '知识点分析'},
-        {id: '#student', 'tit': '学生成绩排行'}
+        {id: 'workdone', 'tit': '作业完成情况'},
+        {id: 'answer', 'tit': '答题详情'},
+        {id: 'knowledge', 'tit': '知识点分析'},
+        {id: 'student', 'tit': '学生成绩排行'}
       ],
-      slideBarIndex: 0,
+      slideBarIndex: 0, // 侧边栏激活index
       taskId: '',
       className: '',
       pullClassName: '',
@@ -323,9 +323,7 @@ export default {
     document.onscroll = function () {
       let heightTop = document.documentElement.scrollTop || document.body.scrollTop
       _this.slideBar.map((item, index) => {
-        if (document.getElementById(item.id.split('#')[1])) {
-          let scrollTop = document.getElementById(item.id.split('#')[1]).offsetTop
-        }
+        let scrollTop = document.getElementById(item.id).offsetTop
         if (heightTop >= (scrollTop - 140)) {
           _this.slideBarIndex = index
         }
@@ -337,6 +335,7 @@ export default {
       init: 'init',
       publishFun: 'publishAnswer'
     }),
+    /* 公布答案 */
     publishAnswer: function () {
       let data = {
         taskId: this.taskId,
@@ -344,33 +343,23 @@ export default {
       }
       this.publishFun(data)
     },
+    /* 跳转学生详情 */
     toStudent: function (index) {
-      if (index >= 0) {
-        this.$router.push({path: `/studentDetail/${this.taskId}/${index}`})
-      } else {
-        this.$router.push({path: `/studentDetail/${this.taskId}`})
-      }
+      this.$router.push({path: `/studentDetail/${this.taskId}/${this.data.users[0].userId}`})
     },
+    /* 跳转试卷详情 */
     toPaper: function () {
       this.$router.push({path: `/paperDetail/${this.taskId}/${this.data.resId}/${this.data.refId}`})
     },
-
-    changeBar: function ($index) {
-      this.slideBar.map((item) => {
-        item.flag = false
-      })
-      this.slideBar[$index].flag = true
+    /* 跳转作业详情 */
+    toWorkDetail: function (data) {
+      window.location = `https://www.yunguxt.com/resource/#/detail/paper/${data.resId}/${data.refId}`
     },
-    /* /!* 回到顶部 *!/
-    goToTop: function () {
-      (function smoothscroll () {
-        var currentScroll = document.documentElement.scrollTop || document.body.scrollTop
-        if (currentScroll > 0) {
-          window.requestAnimationFrame(smoothscroll)
-          window.scrollTo(0, currentScroll - (currentScroll / 5))
-        }
-      })()
-    }, */
+    /* 侧边栏楼梯效果 */
+    changeBar: function ($index, id) {
+      this.slideBarIndex = $index
+      window.scrollTo(0, document.getElementById(id).offsetTop)
+    },
     /* 收起 */
     packUp: function () {
       if (this.pullClassName === 'analy-situation-subject--pull') {
@@ -378,19 +367,6 @@ export default {
       } else {
         this.pullClassName = 'analy-situation-subject--pull'
       }
-    },
-    // 获取taskId
-    getRequest: function () {
-      var url = location.search // 获取url中"?"符后的字串
-      var theRequest = new Object()
-      if (url.indexOf('?') != -1) {
-        var str = url.substr(1),
-          strs = str.split('&')
-        for (var i = 0; i < strs.length; i++) {
-          theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
-        }
-      }
-      return theRequest
     },
     /* 展示题目详情 */
     showDetail: function (data) {

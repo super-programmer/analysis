@@ -29,9 +29,10 @@ export default {
       const { commit, dispatch, state, rootState, rootGetters } = store
       /* 单个学生页面 */
       if (data.taskId === 'student') {
+        /* 此处userId映射为workId */
         let option = {
           method: 'get',
-          url: `work/home/works/${data.activeIndex}/analy2`
+          url: `work/home/works/${data.userId}/analy2`
         }
         await http.axiosRequest(option).then((res) => {
           let resData = res.data
@@ -66,7 +67,6 @@ export default {
                 })
               })
             })
-            console.log(res.data.doneOn)
             resData.doneOn = setTime(resData.doneOn)
             resData.type = true
             commit('GETORIN', resData)
@@ -75,12 +75,11 @@ export default {
         return
       }
       await dispatch('Class/init', data.taskId, {root: true})
-      const studentList = rootGetters['Class/studentList'].data.users
       commit('GETSTUDENT', rootState.Class.data)
       commit('GETPAPER', rootState.Class.content)
       let option = {
         method: 'get',
-        url: `work/home/tasks/${data.taskId}/analy2/users/${studentList[data.activeIndex].userId}`
+        url: `work/home/tasks/${data.taskId}/analy2/users/${data.userId}`
       }
       try {
         await http.axiosRequest(option).then((res) => {
