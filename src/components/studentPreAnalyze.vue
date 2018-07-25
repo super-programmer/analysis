@@ -1,7 +1,7 @@
 <template>
   <div class="g-container">
     <div class="c-analy-heaher c-analy-heaher--sm">
-      <i class="c-analy-heaher__icon c-analy-heaher__icon--course"></i>
+      <i class="c-analy-heaher__icon c-analy-heaher__icon--pre"></i>
       <div class="c-analy-heaher__operation">
       </div>
       <div class="c-analy-heaher__main">
@@ -33,7 +33,7 @@
       </div>
       <div class="analy-section__main">
         <div class="analy-section--left" >
-          <p class="analy-explain" v-html="previewOrder">
+          <p class="analy-explain" v-html="toChangeBr(previewOrder)">
           </p>
           <!-- <p class="analy-explain">
             1，必须在规定的时间内完成
@@ -85,7 +85,7 @@
                 <input v-if="item.doneOn" @click="toDetail(item.workId,1,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 <input  v-if="!item.doneOn" @click="toComplete(item.workId,1)" type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
               </p>
-              <p class="analy-resouce-type analy-resouce-type--vedio"></p>
+              <p class="analy-resouce-type"><Icon :type="item.resIcon" size='40'/></p>
               <p class="analy-resouce-name">
                 {{item.resName}}
               </p>
@@ -119,7 +119,7 @@
                 <input v-if="item.doneOn" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 <input @click="toComplete(item.workId,2)" v-if="!item.doneOn" type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
               </p>
-              <p class="analy-resouce-type analy-resouce-type--doc"></p>
+              <p class="analy-resouce-type "><Icon :type="item.resIcon" size='40'/></p>
               <p class="analy-resouce-name">
                {{item.resName}}
               </p>
@@ -156,7 +156,7 @@
                 <input v-if="item.doneOn" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 <input @click="toComplete(item.workId,3)"  type="button" class="u-btn u-btn--lg u-btn--green" value="去完成">
               </p>
-              <p class="analy-resouce-type analy-resouce-type--paper"></p>
+              <p class="analy-resouce-type"><Icon :type="item.resIcon" size='40'/></p>
               <p class="analy-resouce-name">
                 {{item.resName}}
               </p>
@@ -196,162 +196,167 @@
 <script>
 import API from '@/api/api'
 export default {
-  data(){
-    return{
-     lessonId:1878,//lessonId
-     lessonName:'',//班级名字
-     subjectName:'',//科目
-     className:'',//科目名字
-     teacherName:'',//老师名字
-     titleStartTime:'',
-     startTimeStr:'',
-     previewOrder:'',
-     paperArray:[],//2
-     couseWaveArray:[],//3
-     microClassArray:[],//4
+  data () {
+    return {
+      lessonId: 1878, // lessonId
+      lessonName: '', // 班级名字
+      subjectName: '', // 科目
+      className: '', // 科目名字
+      teacherName: '', // 老师名字
+      titleStartTime: '',
+      startTimeStr: '',
+      previewOrder: '',
+      paperArray: [], // 2
+      couseWaveArray: [], // 3
+      microClassArray: []// 4
     }
   },
-  mounted(){
-    this.lessonId = this.GetRequest("lessonId")
+  mounted () {
+    this.lessonId = this.GetRequest('lessonId')
     API.getStudentPreview(this.lessonId)
-    .then(resp =>{
-      console.log(resp)
-      if(resp.data.className){
-        this.className = resp.data.className
-      }
-      if(resp.data.lessonName){
-        this.lessonName = resp.data.lessonName
-      }
-      if(resp.data.teacherName){
-        this.teacherName = resp.data.teacherName
-      }
-      this.titleStartTime = this.titleTimestampToTime(resp.data.startTime)
-      this.startTimeStr = this.timestampToTime(resp.data.startTime)
-      this.previewOrder = resp.data.demand.html
-      this.paperArray = []
-      this.couseWaveArray = []
-      this.microClassArray = []
-      var allArr = resp.data.works
-      for(var i = 0; i < allArr.length; i ++){
-        var typeDic = allArr[i]
-        if(typeDic.resType == 2){
-          this.paperArray.push(typeDic)
+      .then(resp => {
+        console.log(resp)
+        if (resp.data.className) {
+          this.className = resp.data.className
         }
-        if(typeDic.resType == 3){
-          this.couseWaveArray.push(typeDic)
+        if (resp.data.lessonName) {
+          this.lessonName = resp.data.lessonName
         }
-        if(typeDic.resType == 4){
-          this.microClassArray.push(typeDic)
+        if (resp.data.teacherName) {
+          this.teacherName = resp.data.teacherName
         }
-      }
-    })
-    .catch(err =>{
-      console.log(err)
-    })
+        this.titleStartTime = this.titleTimestampToTime(resp.data.startTime)
+        this.startTimeStr = this.timestampToTime(resp.data.startTime)
+        this.previewOrder = resp.data.demand.html
+        this.paperArray = []
+        this.couseWaveArray = []
+        this.microClassArray = []
+        var allArr = resp.data.works
+        for (var i = 0; i < allArr.length; i++) {
+          var typeDic = allArr[i]
+          if (typeDic.resType == 2) {
+            this.paperArray.push(typeDic)
+          }
+          if (typeDic.resType == 3) {
+            this.couseWaveArray.push(typeDic)
+          }
+          if (typeDic.resType == 4) {
+            this.microClassArray.push(typeDic)
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   },
-  computed:{
-    lessonTitle:function(){
+  computed: {
+    lessonTitle: function () {
       console.log(this.lessonName)
-      if(!this.lessonName){
+      if (!this.lessonName) {
         this.lessonName = this.titleStartTime
       }
-      return this.lessonName + this.subjectName + this.className   + '111'
+      return this.lessonName + this.subjectName + this.className + '111'
     },
-    paperNullClass:function(){
-      if(this.paperArray.length == 0){
+    paperNullClass: function () {
+      if (this.paperArray.length == 0) {
         return 'analy-section__main--null'
-      }else{
+      } else {
         return ''
       }
     },
-    microNullClass:function(){
-      if(this.microClassArray.length == 0){
+    microNullClass: function () {
+      if (this.microClassArray.length == 0) {
         return 'analy-section__main--null'
-      }else{
+      } else {
         return ''
       }
     },
-    courWaveNullClass:function(){
-      if(this.couseWaveArray.length == 0){
+    courWaveNullClass: function () {
+      if (this.couseWaveArray.length == 0) {
         return 'analy-section__main--null'
-      }else{
+      } else {
         return ''
       }
-    },
+    }
   },
-  methods:{
-    timestampToTime(timestamp) {
-      var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear() + '-';
-      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-      var D = (date.getDate()+1 < 10 ? '0'+(date.getDate()+1) : date.getDate()+1) + ' '
-      var h = (date.getHours()+1 < 10 ? '0'+(date.getHours()+1) : date.getHours()+1)  + ':'
-      var m = (date.getMinutes()+1 < 10 ? '0'+(date.getMinutes()+1) : date.getMinutes()+1);
-      //var s = date.getSeconds();
-      return Y+M+D+h+m;
+  methods: {
+    timestampToTime (timestamp) {
+      var date = new Date(timestamp)// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '-'
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+      var D = (date.getDate() + 1 < 10 ? '0' + (date.getDate() + 1) : date.getDate() + 1) + ' '
+      var h = (date.getHours() + 1 < 10 ? '0' + (date.getHours() + 1) : date.getHours() + 1) + ':'
+      var m = (date.getMinutes() + 1 < 10 ? '0' + (date.getMinutes() + 1) : date.getMinutes() + 1)
+      // var s = date.getSeconds();
+      return Y + M + D + h + m
     },
-    titleTimestampToTime(timestamp) {
-      var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    titleTimestampToTime (timestamp) {
+      var date = new Date(timestamp)// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear()
-      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1)
-      var D = (date.getDate()+1 < 10 ? '0'+(date.getDate()+1) : date.getDate()+1)
-      return Y+M+D;
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+      var D = (date.getDate() + 1 < 10 ? '0' + (date.getDate() + 1) : date.getDate() + 1)
+      return Y + M + D
     },
-    toChangeNull(num){
-        if(num){
-          return num
-        }else{
-           return 0
-        }
+    toChangeNull (num) {
+      if (num) {
+        return num
+      } else {
+        return 0
+      }
     },
-     //获取
+    // 获取
     GetRequest (name) {
-      return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
+      return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null
     },
-    togetClass(doneOn){
-      if(doneOn){
+    togetClass (doneOn) {
+      if (doneOn) {
         return 'analy-resouce-tips'
-      }else{
+      } else {
         return 'analy-resouce-tips analy-resouce-tips__noComplete'
       }
     },
-    toComplete(workId,type){
-      if(type == 3){
+    toComplete (workId, type) {
+      if (type == 3) {
         window.location.href = 'https://www.yunguxt.com/homework/#/finishHomework/' + workId
-      }else{
+      } else {
         debugger
         window.location.href = 'https://www.yunguxt.com/workviewer/index.html?workId=' + workId
       }
     },
-    toDetail(workId,type,resId,refId){
-      if(type == 3){
-         this.$router.push({path: `/paperDetail/${taskId}/${resId}/${refId}`})
-        //window.location.href = 'https://www.yunguxt.com/homework/#/finishHomework?workId=' + workId
-      }else{
+    toDetail (workId, type, resId, refId) {
+      if (type == 3) {
+        this.$router.push({path: `/paperDetail/${taskId}/${resId}/${refId}`})
+        // window.location.href = 'https://www.yunguxt.com/homework/#/finishHomework?workId=' + workId
+      } else {
         window.location.href = 'https://www.yunguxt.com/workviewer/index.html/?workId=' + workId
       }
     },
-    toChangeRadio(radio){
+    toChangeRadio (radio) {
       console.log('112233' + radio)
-      if(radio){
+      if (radio) {
         return radio * 100
-      }else{
+      } else {
         return 0
       }
     },
-    togetMiniteAndSecond(secondNum){
-        if(secondNum){
-          if(secondNum<60){
-            return secondNum + '"'
-          }else{
-            return  parseInt(secondNum / 60.0) + "'" + parseInt((parseFloat(secondNum / 60.0) -
-                          parseInt(secondNum / 60.0)) * 60) + '"';
-          }
-        }else{
-          return 0 + '"'
+    togetMiniteAndSecond (secondNum) {
+      if (secondNum) {
+        if (secondNum < 60) {
+          return secondNum + '"'
+        } else {
+          return parseInt(secondNum / 60.0) + "'" + parseInt((parseFloat(secondNum / 60.0) -
+                          parseInt(secondNum / 60.0)) * 60) + '"'
         }
+      } else {
+        return 0 + '"'
+      }
     },
+    toChangeBr (txts) {
+      // txts = $('.wra').html();
+      txts = txts.replace(/\n/g, '<br>')
+      // return $('.wra').html(txts);
+      return txts
+    }
   }
 }
 </script>
-

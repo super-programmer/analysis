@@ -483,6 +483,8 @@ ul, li, ol {
 
 .analy-resouce-type {
   float: left;
+  margin-left: 10px;
+  margin-top: 10px;
   width: 65px;
   height: 100%;
 }

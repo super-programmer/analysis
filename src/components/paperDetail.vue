@@ -150,7 +150,7 @@ export default {
     slideTo: function (num) {
       let _this = this
       _this.itemActiveIndex = num
-      window.scrollTo(0, document.getElementById(num).offsetTop)
+      window.scrollTo(0, document.getElementById(num).offsetTop - 140)
     }
   },
   components: {

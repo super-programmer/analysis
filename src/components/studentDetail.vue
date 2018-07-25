@@ -179,10 +179,13 @@ export default {
     ]
     )
   },
-  mounted () {
+  created () {
     this.taskId = this.$route.params[0].split('/')[0]
     this.userId = this.$route.params[0].split('/')[1]
     this.init()
+  },
+  mounted () {
+
   },
   methods: {
     ...mapActions('Student', {
@@ -209,14 +212,14 @@ export default {
     slideTo: function (num) {
       let _this = this
       _this.itemActiveIndex = num
-      window.scrollTo(0, document.getElementById(num).offsetTop)
+      window.scrollTo(0, document.getElementById(num).offsetTop - 350)
     },
     async init () {
       let data = {taskId: this.taskId, userId: this.userId}
       await this.initStudent(data).then(() => {
         let _this = this
-        _this.userId = _this.userId
         /* 将题目qid整合进一个数组 */
+        console.log(_this.content.content)
         _this.content.content.sections[0].groups.map((item) => {
           item.ques.map((smitem) => {
             _this.itemActivelist.push(smitem.qid)

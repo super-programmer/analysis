@@ -31,7 +31,7 @@
                 <p class="analy-resouce-operation">
                   <input @click="toDetail(item.workId,item.taskId,item.resType,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 </p>
-                <p class="analy-resouce-type analy-resouce-type--vedio"></p>
+                <p class="analy-resouce-type"><Icon :type="item.resIcon" size='40'/></p>
                 <p class="analy-resouce-name">
                   {{item.resName}}
                 </p>
@@ -64,7 +64,7 @@
                 <p class="analy-resouce-operation">
                   <input @click="toDetail(item.workId,item.taskId,item.resType,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 </p>
-                <p class="analy-resouce-type analy-resouce-type--doc"></p>
+                <p class="analy-resouce-type"><Icon :type="item.resIcon" size='40'/></p>
                 <p class="analy-resouce-name">
                   {{item.resName}}
                 </p>
@@ -97,7 +97,7 @@
                 <p class="analy-resouce-operation">
                   <input @click="toDetail(item.workId,item.taskId,item.resType,item.resId,item.refId)" type="button" class="u-btn u-btn--lg u-btn--orange" value="作业详情">
                 </p>
-                <p class="analy-resouce-type analy-resouce-type--paper"></p>
+                <p class="analy-resouce-type"><Icon :type="item.resIcon" size='40'/></p>
                 <p class="analy-resouce-name">
                   {{item.resName}}
                 </p>
@@ -177,14 +177,16 @@ export default {
           var allArr = resp.data
           for (var i = 0; i < allArr.length; i++) {
             var typeDic = allArr[i]
-            if (typeDic.resType == 2) {
-              this.paperArray.push(typeDic)
-            }
-            if (typeDic.resType == 3) {
-              this.couseWaveArray.push(typeDic)
-            }
-            if (typeDic.resType == 4) {
-              this.microClassArray.push(typeDic)
+            if (typeDic.doneOn) {
+              if (typeDic.resType == 2) {
+                this.paperArray.push(typeDic)
+              }
+              if (typeDic.resType == 3) {
+                this.couseWaveArray.push(typeDic)
+              }
+              if (typeDic.resType == 4) {
+                this.microClassArray.push(typeDic)
+              }
             }
           }
         })
@@ -209,20 +211,24 @@ export default {
       // 取到路由带过来的参数
       this.lessonId = this.$route.query.lessonId
       this.nowUserId = this.$route.query.userId
-      API.getTeacherClassPreview(this.lessonId)
-        .then(resp => {
-          console.log(resp)
-          this.userArr = resp.data.users
-          if (this.userArr.length != 0) {
-            console.log(this.userArr)
-            this.firstUserId = this.userArr[0].userId
-          }
-          console.log(this.firstUserId)
-          this.togetDataFromUserId(this.nowUserId)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.userArr = this.$route.query.userArr
+      console.log(this.userArr)
+      this.togetDataFromUserId(this.nowUserId)
+
+      // API.getTeacherClassPreview(this.lessonId)
+      // .then(resp =>{
+      //   console.log(resp)
+      //   this.userArr = resp.data.users
+      //   if(this.userArr.length != 0){
+      //     console.log(this.userArr)
+      //     this.firstUserId = this.userArr[0].userId
+      //   }
+      //   console.log(this.firstUserId)
+
+      // })
+      // .catch(err =>{
+      //   console.log(err)
+      // })
     },
     togetHourAndMinite (secondNum) {
       if (secondNum) {

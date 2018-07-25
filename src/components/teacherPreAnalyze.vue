@@ -35,7 +35,7 @@
     </div>
   </el-dialog>
   <div class="c-analy-heaher">
-    <i class="c-analy-heaher__icon c-analy-heaher__icon--course"></i>
+    <i class="c-analy-heaher__icon c-analy-heaher__icon--pre"></i>
     <div class="c-analy-heaher__operation">
     </div>
     <div class="c-analy-heaher__main">
@@ -79,8 +79,8 @@
             <p class="analy-resouce-operation">
               <input @click="toGotodetail(item.taskId,item.resType,item.resId,item.refId)"  type="button" class="u-btn u-btn--lg u-btn--green" value="查看">
             </p>
-            <!-- <p class="analy-resouce-type analy-resouce-type--doc"></p> -->
-            <p :class="toJudgeClassType(item.resType)"></p>
+             <p class="analy-resouce-type"><Icon :type="item.resIcon" size='40'/></p>
+            <!-- <p :class="toJudgeClassType(item.resType)"></p> -->
             <p class="analy-resouce-name">
               {{item.resName}}
             </p>
@@ -149,6 +149,7 @@ export default {
       noDoStudentArr: [],
       partDoStudentArr: [],
       allDoStudentArr: [],
+      userArr: [],
       lessonId: 1878, // lessonId
       lessonName: '', // 班级名字
       subjectName: '', // 科目
@@ -162,14 +163,14 @@ export default {
       dialogTableVisible: false,
       clickType: 0,
       titleStartTime: '',
+      pushUserArr: []
     }
   },
   mounted () {
-     // debugger
+    // debugger
     this.lessonId = this.GetRequest('lessonId')
     API.getTeacherClassPreview(this.lessonId)
       .then(resp => {
-        console.log(resp)
         if (resp.data.className) {
           this.className = resp.data.className
         }
@@ -190,6 +191,7 @@ export default {
           this.paperArray.push(typeDic)
         }
         var allUserArr = resp.data.users
+        this.userArr = resp.data.users
         for (var i = 0; i < allUserArr.length; i++) {
           var stateDic = allUserArr[i]
           console.log(stateDic)
@@ -301,23 +303,29 @@ export default {
       }
     },
     toLook (nowUserId) {
-      this.$router.push({name: 'teacherUserPreAnalyze', query: { lessonId: this.lessonId, userId: nowUserId}})
+      for (var i = 0; i < this.userArr.length; i++) {
+        var userDic = this.userArr[i]
+        if (userDic.state === 3 || userDic.state === 4) {
+          this.pushUserArr.push(userDic)
+        }
+      }
+      this.$router.push({name: 'teacherUserPreAnalyze', query: { lessonId: this.lessonId, userId: nowUserId, userArr: this.pushUserArr}})
     },
     toJudgeClassType (type) {
       if (type == 2) {
-          return 'analy-resouce-type analy-resouce-type--paper'
+        return 'analy-resouce-type analy-resouce-type--paper'
       }
       if (type == 3) {
-        return 'analy-resouce-type analy-resouce-type--doc'
+        return 'analy-resouce-type iconfont icon-correct'
       }
       if (type == 4) {
         return 'analy-resouce-type analy-resouce-type--vedio'
       }
     },
-    toGotodetail (taskId, type,resId,refId) {
+    toGotodetail (taskId, type, resId, refId) {
       if (type != 2) {
         this.$router.push({name: 'teacherVedio', query: {taskId: taskId}})
-      }else{
+      } else {
         // this.$router.push({path: `/${taskId}/${resId}/${refId}`})
         this.$router.push({path: `/index/${taskId}`})
       }
